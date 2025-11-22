@@ -5,8 +5,10 @@
 import FlutterMacOS
 import Foundation
 
-import rive_common
+import cupertino_native
+import shared_preferences_foundation
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
-  RivePlugin.register(with: registry.registrar(forPlugin: "RivePlugin"))
+  CupertinoNativePlugin.register(with: registry.registrar(forPlugin: "CupertinoNativePlugin"))
+  SharedPreferencesPlugin.register(with: registry.registrar(forPlugin: "SharedPreferencesPlugin"))
 }

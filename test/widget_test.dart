@@ -28,3 +28,21 @@ void main() {
     expect(find.text('1'), findsOneWidget);
   });
 }
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: const Text('Flutter Demo Home Page')),
+        body: const Center(child: Text('0')),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          child: const Icon(Icons.add),
+        ),
+      ),
+    );
+  }
+}

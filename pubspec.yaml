@@ -1,32 +1,28 @@
 name: synapser_frontend
-description: "A proactive AI assistant for your life."
-publish_to: 'none' 
+description: "Ein intelligenter Tagesplaner im nativen Cupertino Design."
+publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.3.3 <4.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
   
-  http: ^1.2.1
-  # Das Paket wird wieder hinzugefügt
-  liquid_glass_renderer: ^0.1.1-dev.10
-  liquid_engine: ^0.2.2
-  liquid_glass_ui_design: ^1.0.5
-  liquid_glass_ui: ^0.4.0
-  liquid_container: ^1.1.0
-  liquid_glass_texture: ^0.0.4
-  liquid_glass_effect: ^1.0.1
-  liquidglass_container: ^1.0.2
-  oc_liquid_glass: ^0.2.1 
-  liquid_glass_bottom_bar: ^0.0.6
-  liquid_wave_animate_button: ^1.0.5
-
-
+  # UI Icons
   cupertino_icons: ^1.0.6
-  apple_liquid_glass: ^0.1.0-dev.11
+  
+  # Das gewünschte native Paket
+  cupertino_native: ^0.1.1
+
+  # Backend Kommunikation
+  http: ^1.2.0
+  
+  # Hilfsmittel
+  intl: ^0.19.0
+  shared_preferences: ^2.2.2
+  modal_bottom_sheet: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -35,4 +31,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
