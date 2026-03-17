@@ -1,0 +1,169 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:provider/provider.dart';
+import '../config/theme.dart';
+import '../l10n/l10n.dart';
+import '../providers/schedule_provider.dart';
+import '../widgets/glass_card.dart';
+import '../widgets/glass_button.dart';
+import '../widgets/glass_input.dart';
+import '../widgets/glass_toast.dart';
+import '../widgets/conflict_resolution_view.dart';
+
+class AiTaskInputSheet extends StatefulWidget {
+  const AiTaskInputSheet({super.key});
+
+  @override
+  State<AiTaskInputSheet> createState() => _AiTaskInputSheetState();
+}
+
+class _AiTaskInputSheetState extends State<AiTaskInputSheet> {
+  final _textController = TextEditingController();
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _submit() async {
+    final text = _textController.text.trim();
+    if (text.isEmpty) return;
+
+    final provider = context.read<ScheduleProvider>();
+    final success = await provider.addTaskWithAi(text);
+
+    if (mounted) {
+      if (success) {
+        GlassToast.show(context,
+            message: S.of(context).taskAdded, type: ToastType.success);
+        Navigator.pop(context);
+      } else if (provider.activeConflict == null && provider.error != null) {
+        GlassToast.show(context,
+            message: provider.error!, type: ToastType.error);
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final scheduleProvider = context.watch<ScheduleProvider>();
+    final s = S.of(context);
+
+    return DraggableScrollableSheet(
+      initialChildSize: 0.6,
+      minChildSize: 0.4,
+      maxChildSize: 0.9,
+      builder: (context, scrollController) {
+        return Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                SynapserTheme.backgroundMid.withValues(alpha: 0.95),
+                SynapserTheme.backgroundDark.withValues(alpha: 0.98),
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+            border: Border(
+              top: BorderSide(color: Colors.white.withValues(alpha: 0.1)),
+              left: BorderSide(color: Colors.white.withValues(alpha: 0.1)),
+              right: BorderSide(color: Colors.white.withValues(alpha: 0.1)),
+            ),
+          ),
+          child: SingleChildScrollView(
+            controller: scrollController,
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Drag Handle
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.3),
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24),
+
+                if (scheduleProvider.activeConflict != null)
+                  // Conflict View
+                  ConflictResolutionView(
+                    conflict: scheduleProvider.activeConflict!,
+                    isLoading: scheduleProvider.isLoading,
+                    onSuggestionChosen: (suggestion) async {
+                      final success =
+                          await scheduleProvider.resolveConflict(suggestion);
+                      if (success && mounted) {
+                        GlassToast.show(context,
+                            message: s.conflictResolved,
+                            type: ToastType.success);
+                        Navigator.pop(context);
+                      }
+                    },
+                    onCancel: () {
+                      scheduleProvider.clearConflict();
+                    },
+                  ).animate().fadeIn(duration: 300.ms)
+                else ...[
+                  // Title
+                  Row(
+                    children: [
+                      const Icon(Icons.auto_awesome_rounded,
+                          color: SynapserTheme.accentTeal, size: 22),
+                      const SizedBox(width: 8),
+                      Text(
+                        s.whatToSchedule,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Input
+                  GlassTextField(
+                    controller: _textController,
+                    hintText: s.describeTask,
+                    maxLines: 3,
+                    textInputAction: TextInputAction.done,
+                    onEditingComplete: _submit,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    s.taskExamples,
+                    style: TextStyle(
+                      color: Colors.white.withValues(alpha: 0.35),
+                      fontSize: 12,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+
+                  // Submit Button
+                  SizedBox(
+                    width: double.infinity,
+                    child: GlassButton(
+                      label: s.schedule,
+                      icon: Icons.send_rounded,
+                      isLoading: scheduleProvider.isLoading,
+                      onPressed: _submit,
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
