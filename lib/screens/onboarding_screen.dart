@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
@@ -77,67 +78,76 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     final s = S.of(context);
 
-    return Scaffold(
-      backgroundColor: SynapserTheme.backgroundPrimary,
-      body: SafeArea(
-        child: Column(
-          children: [
-            const SizedBox(height: 24),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(4, (i) {
-                return AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  width: i == _currentPage ? 28 : 8,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    color: i == _currentPage
-                        ? SynapserTheme.accentBlue
-                        : SynapserTheme.labelQuaternary,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                );
-              }),
-            ),
-            const SizedBox(height: 32),
-
-            Expanded(
-              child: PageView(
-                controller: _pageController,
-                onPageChanged: (i) => setState(() => _currentPage = i),
-                children: [
-                  _buildOccupationPage(s),
-                  _buildHobbiesPage(s),
-                  _buildWorkHoursPage(s),
-                  _buildLocationPage(s),
-                ],
+    return SynapserTheme.meshGradientBackground(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SafeArea(
+          child: Column(
+            children: [
+              const SizedBox(height: 24),
+              // Progress dots
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(4, (i) {
+                  return AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    margin: const EdgeInsets.symmetric(horizontal: 4),
+                    width: i == _currentPage ? 28 : 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      gradient: i == _currentPage
+                          ? LinearGradient(
+                              colors: [
+                                SynapserTheme.tintBlue,
+                                SynapserTheme.tintCyan,
+                              ],
+                            )
+                          : null,
+                      color: i == _currentPage ? null : SynapserTheme.labelTertiary.withValues(alpha: 0.3),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  );
+                }),
               ),
-            ),
+              const SizedBox(height: 32),
 
-            Padding(
-              padding: const EdgeInsets.all(24),
-              child: Row(
-                children: [
-                  if (_currentPage < 3)
+              Expanded(
+                child: PageView(
+                  controller: _pageController,
+                  onPageChanged: (i) => setState(() => _currentPage = i),
+                  children: [
+                    _buildOccupationPage(s),
+                    _buildHobbiesPage(s),
+                    _buildWorkHoursPage(s),
+                    _buildLocationPage(s),
+                  ],
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.all(24),
+                child: Row(
+                  children: [
+                    if (_currentPage < 3)
+                      Expanded(
+                        child: GlassButton(
+                          label: s.skip,
+                          isPrimary: false,
+                          onPressed: _nextPage,
+                        ),
+                      ),
+                    if (_currentPage < 3) const SizedBox(width: 12),
                     Expanded(
                       child: GlassButton(
-                        label: s.skip,
-                        isPrimary: false,
+                        label: _currentPage == 3 ? s.done : s.next,
                         onPressed: _nextPage,
                       ),
                     ),
-                  if (_currentPage < 3) const SizedBox(width: 12),
-                  Expanded(
-                    child: GlassButton(
-                      label: _currentPage == 3 ? s.done : s.next,
-                      onPressed: _nextPage,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -175,19 +185,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 }
               });
             },
-            selectedColor: SynapserTheme.accentBlue.withValues(alpha: 0.15),
-            backgroundColor: SynapserTheme.backgroundTertiary.withValues(alpha: 0.5),
+            selectedColor: SynapserTheme.tintBlue.withValues(alpha: 0.15),
+            backgroundColor: Colors.white.withValues(alpha: 0.5),
             labelStyle: TextStyle(
-              color: selected ? SynapserTheme.accentBlue : SynapserTheme.labelSecondary,
+              color: selected ? SynapserTheme.tintBlue : SynapserTheme.labelSecondary,
               fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
             ),
             side: BorderSide(
               color: selected
-                  ? SynapserTheme.accentBlue.withValues(alpha: 0.4)
-                  : Colors.transparent,
+                  ? SynapserTheme.tintBlue.withValues(alpha: 0.4)
+                  : Colors.white.withValues(alpha: 0.6),
+              width: 0.5,
             ),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(12),
             ),
           );
         }).toList(),
@@ -227,14 +238,31 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            width: 56,
-            height: 56,
-            decoration: BoxDecoration(
-              color: SynapserTheme.accentBlue.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(14),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+              child: Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      SynapserTheme.tintBlue.withValues(alpha: 0.25),
+                      SynapserTheme.tintCyan.withValues(alpha: 0.15),
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.5),
+                    width: 0.5,
+                  ),
+                ),
+                child: Icon(icon, size: 28, color: SynapserTheme.tintBlue),
+              ),
             ),
-            child: Icon(icon, size: 28, color: SynapserTheme.accentBlue),
           ).animate().scale(duration: 400.ms, curve: Curves.easeOutBack),
           const SizedBox(height: 24),
           Text(

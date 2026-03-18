@@ -27,12 +27,12 @@ class ConflictResolutionView extends StatelessWidget {
         Row(
           children: [
             Icon(Icons.warning_amber_rounded,
-                color: SynapserTheme.accentOrange, size: 24),
+                color: SynapserTheme.tintOrange, size: 24),
             const SizedBox(width: 8),
             Text(
               'Planungskonflikt',
               style: TextStyle(
-                color: SynapserTheme.accentOrange,
+                color: SynapserTheme.tintOrange,
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
               ),
@@ -59,8 +59,12 @@ class ConflictResolutionView extends StatelessWidget {
               return Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
-                  color: SynapserTheme.accentOrange.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(8),
+                  color: SynapserTheme.tintOrange.withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    color: SynapserTheme.tintOrange.withValues(alpha: 0.2),
+                    width: 0.5,
+                  ),
                 ),
                 child: Text(
                   event.name,
@@ -86,12 +90,12 @@ class ConflictResolutionView extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 8),
             child: GlassCard(
               padding: const EdgeInsets.all(14),
-              accentColor: SynapserTheme.accentBlue,
+              accentColor: SynapserTheme.tintBlue,
               onTap: isLoading ? null : () => onSuggestionChosen(suggestion),
               child: Row(
                 children: [
                   const Icon(Icons.auto_fix_high_rounded,
-                      color: SynapserTheme.accentBlue, size: 18),
+                      color: SynapserTheme.tintBlue, size: 18),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(
@@ -103,7 +107,7 @@ class ConflictResolutionView extends StatelessWidget {
                     ),
                   ),
                   Icon(Icons.chevron_right_rounded,
-                      color: SynapserTheme.labelQuaternary, size: 20),
+                      color: SynapserTheme.labelTertiary, size: 20),
                 ],
               ),
             ),

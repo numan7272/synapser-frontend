@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
@@ -53,133 +54,153 @@ class _LoginScreenState extends State<LoginScreen> {
     final auth = context.watch<AuthProvider>();
     final s = S.of(context);
 
-    return Scaffold(
-      backgroundColor: SynapserTheme.backgroundPrimary,
-      body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: SynapserTheme.accentBlue,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: const Icon(
-                      Icons.auto_awesome_rounded,
-                      color: Colors.white,
-                      size: 28,
-                    ),
-                  ).animate().scale(duration: 400.ms, curve: Curves.easeOutBack),
-                  const SizedBox(height: 12),
-                  const Text(
-                    'Synapser',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: SynapserTheme.labelPrimary,
-                      letterSpacing: -0.5,
-                    ),
-                  ),
-                  const SizedBox(height: 32),
-
-                  GlassCard(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Text(
-                          s.welcomeBack,
-                          style: const TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: SynapserTheme.labelPrimary,
-                          ),
-                        ),
-                        const SizedBox(height: 24),
-                        GlassTextField(
-                          controller: _emailController,
-                          hintText: s.email,
-                          keyboardType: TextInputType.emailAddress,
-                          textInputAction: TextInputAction.next,
-                          prefixIcon: const Icon(Icons.email_outlined,
-                              color: SynapserTheme.labelTertiary),
-                          validator: (v) {
-                            if (v == null || !v.contains('@')) {
-                              return s.invalidEmail;
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 16),
-                        GlassTextField(
-                          controller: _passwordController,
-                          hintText: s.password,
-                          obscureText: _obscurePassword,
-                          textInputAction: TextInputAction.done,
-                          onEditingComplete: _login,
-                          prefixIcon: const Icon(Icons.lock_outline_rounded,
-                              color: SynapserTheme.labelTertiary),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _obscurePassword
-                                  ? Icons.visibility_off_outlined
-                                  : Icons.visibility_outlined,
-                              color: SynapserTheme.labelTertiary,
+    return SynapserTheme.meshGradientBackground(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SafeArea(
+          child: Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(24),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Liquid Glass logo
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(18),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                        child: Container(
+                          width: 64,
+                          height: 64,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                SynapserTheme.tintBlue.withValues(alpha: 0.6),
+                                SynapserTheme.tintPurple.withValues(alpha: 0.4),
+                              ],
                             ),
-                            onPressed: () =>
-                                setState(() => _obscurePassword = !_obscurePassword),
+                            borderRadius: BorderRadius.circular(18),
+                            border: Border.all(
+                              color: Colors.white.withValues(alpha: 0.5),
+                              width: 0.5,
+                            ),
                           ),
-                          validator: (v) {
-                            if (v == null || v.length < 8) {
-                              return s.passwordTooShort;
-                            }
-                            return null;
-                          },
+                          child: const Icon(
+                            Icons.auto_awesome_rounded,
+                            color: Colors.white,
+                            size: 28,
+                          ),
                         ),
-                        const SizedBox(height: 24),
-                        GlassButton(
-                          label: s.login,
-                          isLoading: auth.status == AuthStatus.loading,
-                          onPressed: _login,
+                      ),
+                    ).animate().scale(duration: 400.ms, curve: Curves.easeOutBack),
+                    const SizedBox(height: 12),
+                    const Text(
+                      'Synapser',
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: SynapserTheme.labelPrimary,
+                        letterSpacing: -0.5,
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+
+                    GlassCard(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text(
+                            s.welcomeBack,
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: SynapserTheme.labelPrimary,
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                          GlassTextField(
+                            controller: _emailController,
+                            hintText: s.email,
+                            keyboardType: TextInputType.emailAddress,
+                            textInputAction: TextInputAction.next,
+                            prefixIcon: const Icon(Icons.email_outlined,
+                                color: SynapserTheme.labelTertiary),
+                            validator: (v) {
+                              if (v == null || !v.contains('@')) {
+                                return s.invalidEmail;
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                          GlassTextField(
+                            controller: _passwordController,
+                            hintText: s.password,
+                            obscureText: _obscurePassword,
+                            textInputAction: TextInputAction.done,
+                            onEditingComplete: _login,
+                            prefixIcon: const Icon(Icons.lock_outline_rounded,
+                                color: SynapserTheme.labelTertiary),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _obscurePassword
+                                    ? Icons.visibility_off_outlined
+                                    : Icons.visibility_outlined,
+                                color: SynapserTheme.labelTertiary,
+                              ),
+                              onPressed: () =>
+                                  setState(() => _obscurePassword = !_obscurePassword),
+                            ),
+                            validator: (v) {
+                              if (v == null || v.length < 8) {
+                                return s.passwordTooShort;
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 24),
+                          GlassButton(
+                            label: s.login,
+                            isLoading: auth.status == AuthStatus.loading,
+                            onPressed: _login,
+                          ),
+                        ],
+                      ),
+                    ).animate().fadeIn(duration: 500.ms).slideY(begin: 0.1),
+                    const SizedBox(height: 20),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(s.noAccount,
+                            style: const TextStyle(
+                                color: SynapserTheme.labelTertiary)),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              PageRouteBuilder(
+                                pageBuilder: (_, __, ___) =>
+                                    const RegisterScreen(),
+                                transitionsBuilder: (_, anim, __, child) {
+                                  return FadeTransition(
+                                      opacity: anim, child: child);
+                                },
+                              ),
+                            );
+                          },
+                          child: Text(s.register,
+                              style: const TextStyle(
+                                  color: SynapserTheme.tintBlue,
+                                  fontWeight: FontWeight.w600)),
                         ),
                       ],
                     ),
-                  ).animate().fadeIn(duration: 500.ms).slideY(begin: 0.1),
-                  const SizedBox(height: 20),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(s.noAccount,
-                          style: const TextStyle(
-                              color: SynapserTheme.labelTertiary)),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            PageRouteBuilder(
-                              pageBuilder: (_, __, ___) =>
-                                  const RegisterScreen(),
-                              transitionsBuilder: (_, anim, __, child) {
-                                return FadeTransition(
-                                    opacity: anim, child: child);
-                              },
-                            ),
-                          );
-                        },
-                        child: Text(s.register,
-                            style: const TextStyle(
-                                color: SynapserTheme.accentBlue,
-                                fontWeight: FontWeight.w600)),
-                      ),
-                    ],
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

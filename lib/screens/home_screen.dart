@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     IconButton(
                       icon: const Icon(Icons.calendar_month_rounded,
-                          color: SynapserTheme.accentBlue),
+                          color: SynapserTheme.tintBlue),
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     IconButton(
                       icon: const Icon(Icons.upload_file_rounded,
-                          color: SynapserTheme.accentBlue),
+                          color: SynapserTheme.tintBlue),
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -93,17 +93,18 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           const SizedBox(height: 16),
 
+          // AI Explanation Banner
           if (scheduleProvider.explanation != null)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: GlassCard(
-                accentColor: SynapserTheme.accentPurple,
+                accentColor: SynapserTheme.tintPurple,
                 padding: const EdgeInsets.all(14),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Icon(Icons.auto_awesome_rounded,
-                        color: SynapserTheme.accentPurple, size: 18),
+                        color: SynapserTheme.tintPurple, size: 18),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
@@ -118,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     GestureDetector(
                       onTap: scheduleProvider.clearExplanation,
                       child: const Icon(Icons.close_rounded,
-                          color: SynapserTheme.labelQuaternary, size: 18),
+                          color: SynapserTheme.labelTertiary, size: 18),
                     ),
                   ],
                 ),
@@ -127,12 +128,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
           const SizedBox(height: 12),
 
+          // Timeline
           Expanded(
             child: todaySlots.isEmpty
                 ? _buildEmptyState(s)
                 : RefreshIndicator(
-                    color: SynapserTheme.accentBlue,
-                    backgroundColor: SynapserTheme.backgroundSecondary,
+                    color: SynapserTheme.tintBlue,
                     onRefresh: () async {},
                     child: ListView.builder(
                       padding: const EdgeInsets.only(top: 8, bottom: 100),
@@ -162,14 +163,14 @@ class _HomeScreenState extends State<HomeScreen> {
           Icon(
             Icons.event_available_rounded,
             size: 56,
-            color: SynapserTheme.labelQuaternary,
+            color: SynapserTheme.labelTertiary.withValues(alpha: 0.4),
           ),
           const SizedBox(height: 16),
           Text(
             s.noEventsToday,
             style: const TextStyle(
               fontSize: 18,
-              color: SynapserTheme.labelTertiary,
+              color: SynapserTheme.labelSecondary,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -178,7 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
             s.addFirstTask,
             style: const TextStyle(
               fontSize: 15,
-              color: SynapserTheme.labelQuaternary,
+              color: SynapserTheme.labelTertiary,
             ),
           ),
           const SizedBox(height: 24),

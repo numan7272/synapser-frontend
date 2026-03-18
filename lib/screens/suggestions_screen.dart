@@ -50,14 +50,13 @@ class _SuggestionsScreenState extends State<SuggestionsScreen> {
             child: provider.isLoading
                 ? const Center(
                     child: CircularProgressIndicator(
-                      color: SynapserTheme.accentBlue,
+                      color: SynapserTheme.tintBlue,
                     ),
                   )
                 : provider.suggestions.isEmpty
                     ? _buildEmptyState(s)
                     : RefreshIndicator(
-                        color: SynapserTheme.accentBlue,
-                        backgroundColor: SynapserTheme.backgroundSecondary,
+                        color: SynapserTheme.tintBlue,
                         onRefresh: provider.fetchSuggestions,
                         child: ListView.builder(
                           padding: const EdgeInsets.fromLTRB(16, 0, 16, 100),
@@ -75,7 +74,7 @@ class _SuggestionsScreenState extends State<SuggestionsScreen> {
                                       style: const TextStyle(
                                         fontSize: 17,
                                         fontWeight: FontWeight.w600,
-                                        color: SynapserTheme.accentBlue,
+                                        color: SynapserTheme.tintBlue,
                                       ),
                                     ),
                                     const SizedBox(height: 8),
@@ -146,18 +145,18 @@ class _SuggestionsScreenState extends State<SuggestionsScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(Icons.lightbulb_outline_rounded,
-              size: 56, color: SynapserTheme.labelQuaternary),
+              size: 56, color: SynapserTheme.labelTertiary.withValues(alpha: 0.4)),
           const SizedBox(height: 16),
           Text(s.noSuggestions,
               style: const TextStyle(
-                  color: SynapserTheme.labelTertiary,
+                  color: SynapserTheme.labelSecondary,
                   fontSize: 17,
                   fontWeight: FontWeight.w600)),
           const SizedBox(height: 8),
           Text(s.noSuggestionsHint,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                  color: SynapserTheme.labelQuaternary, fontSize: 15)),
+                  color: SynapserTheme.labelTertiary, fontSize: 15)),
         ],
       ),
     );

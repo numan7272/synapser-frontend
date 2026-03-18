@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:intl/intl.dart';
@@ -38,134 +39,145 @@ class _CalendarScreenState extends State<CalendarScreen> {
     final s = S.of(context);
     final locale = S.locale(context);
 
-    return Scaffold(
-      backgroundColor: SynapserTheme.backgroundPrimary,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_rounded, color: SynapserTheme.accentBlue),
-          onPressed: () => Navigator.pop(context),
+    return SynapserTheme.meshGradientBackground(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_rounded, color: SynapserTheme.tintBlue),
+            onPressed: () => Navigator.pop(context),
+          ),
+          title: Text(s.weekView,
+              style: const TextStyle(color: SynapserTheme.labelPrimary, fontSize: 17, fontWeight: FontWeight.w600)),
         ),
-        title: Text(s.weekView,
-            style: const TextStyle(color: SynapserTheme.labelPrimary, fontSize: 17, fontWeight: FontWeight.w600)),
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 80,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                itemCount: _weekDays.length,
-                itemBuilder: (context, index) {
-                  final day = _weekDays[index];
-                  final isSelected = DateUtils.isSameDay(day, _selectedDate);
-                  final isToday = DateUtils.isSameDay(day, DateTime.now());
+        body: SafeArea(
+          child: Column(
+            children: [
+              // Date picker
+              SizedBox(
+                height: 80,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  itemCount: _weekDays.length,
+                  itemBuilder: (context, index) {
+                    final day = _weekDays[index];
+                    final isSelected = DateUtils.isSameDay(day, _selectedDate);
+                    final isToday = DateUtils.isSameDay(day, DateTime.now());
 
-                  return GestureDetector(
-                    onTap: () => setState(() => _selectedDate = day),
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: isSelected
-                            ? SynapserTheme.accentBlue
-                            : SynapserTheme.backgroundSecondary,
-                        borderRadius: BorderRadius.circular(14),
-                        boxShadow: isSelected
-                            ? [
-                                BoxShadow(
-                                  color: SynapserTheme.accentBlue.withValues(alpha: 0.3),
-                                  blurRadius: 8,
-                                  offset: const Offset(0, 2),
-                                ),
-                              ]
-                            : [
-                                BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.03),
-                                  blurRadius: 4,
-                                ),
-                              ],
-                        border: isToday && !isSelected
-                            ? Border.all(color: SynapserTheme.accentBlue.withValues(alpha: 0.3))
-                            : null,
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            DateFormat('E', locale).format(day),
-                            style: TextStyle(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w500,
-                              color: isSelected
-                                  ? Colors.white.withValues(alpha: 0.8)
-                                  : SynapserTheme.labelTertiary,
-                            ),
+                    return GestureDetector(
+                      onTap: () => setState(() => _selectedDate = day),
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                        decoration: BoxDecoration(
+                          gradient: isSelected
+                              ? LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    SynapserTheme.tintBlue.withValues(alpha: 0.8),
+                                    SynapserTheme.tintCyan.withValues(alpha: 0.6),
+                                  ],
+                                )
+                              : null,
+                          color: isSelected ? null : Colors.white.withValues(alpha: 0.45),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: isSelected
+                                ? Colors.white.withValues(alpha: 0.4)
+                                : isToday
+                                    ? SynapserTheme.tintBlue.withValues(alpha: 0.3)
+                                    : Colors.white.withValues(alpha: 0.5),
+                            width: 0.5,
                           ),
-                          const SizedBox(height: 4),
-                          Text(
-                            '${day.day}',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: isSelected
-                                  ? Colors.white
-                                  : SynapserTheme.labelPrimary,
+                          boxShadow: isSelected
+                              ? [
+                                  BoxShadow(
+                                    color: SynapserTheme.tintBlue.withValues(alpha: 0.3),
+                                    blurRadius: 12,
+                                    offset: const Offset(0, 4),
+                                  ),
+                                ]
+                              : null,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              DateFormat('E', locale).format(day),
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w500,
+                                color: isSelected
+                                    ? Colors.white.withValues(alpha: 0.8)
+                                    : SynapserTheme.labelTertiary,
+                              ),
                             ),
-                          ),
-                        ],
+                            const SizedBox(height: 4),
+                            Text(
+                              '${day.day}',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                color: isSelected
+                                    ? Colors.white
+                                    : SynapserTheme.labelPrimary,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
-            ),
-            const SizedBox(height: 8),
+              const SizedBox(height: 8),
 
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  DateFormat('EEEE, d. MMMM', locale).format(_selectedDate),
-                  style: const TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600,
-                    color: SynapserTheme.labelSecondary,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    DateFormat('EEEE, d. MMMM', locale).format(_selectedDate),
+                    style: const TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600,
+                      color: SynapserTheme.labelSecondary,
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(height: 12),
+              const SizedBox(height: 12),
 
-            Expanded(
-              child: daySlots.isEmpty
-                  ? Center(
-                      child: Text(
-                        s.noEventsOnDay,
-                        style: const TextStyle(
-                          color: SynapserTheme.labelTertiary,
-                          fontSize: 17,
+              Expanded(
+                child: daySlots.isEmpty
+                    ? Center(
+                        child: Text(
+                          s.noEventsOnDay,
+                          style: const TextStyle(
+                            color: SynapserTheme.labelTertiary,
+                            fontSize: 17,
+                          ),
                         ),
+                      )
+                    : ListView.builder(
+                        padding: const EdgeInsets.only(top: 8, bottom: 24),
+                        itemCount: daySlots.length,
+                        itemBuilder: (context, index) {
+                          return TimelineSlotWidget(
+                            slot: daySlots[index],
+                            isLast: index == daySlots.length - 1,
+                          ).animate().fadeIn(
+                                delay: Duration(milliseconds: 50 * index),
+                                duration: 300.ms,
+                              );
+                        },
                       ),
-                    )
-                  : ListView.builder(
-                      padding: const EdgeInsets.only(top: 8, bottom: 24),
-                      itemCount: daySlots.length,
-                      itemBuilder: (context, index) {
-                        return TimelineSlotWidget(
-                          slot: daySlots[index],
-                          isLast: index == daySlots.length - 1,
-                        ).animate().fadeIn(
-                              delay: Duration(milliseconds: 50 * index),
-                              duration: 300.ms,
-                            );
-                      },
-                    ),
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../config/theme.dart';
 
@@ -11,32 +12,38 @@ class GlassLoadingOverlay extends StatelessWidget {
     return Container(
       color: Colors.black.withValues(alpha: 0.15),
       child: Center(
-        child: Container(
-          padding: const EdgeInsets.all(32),
-          decoration: SynapserTheme.cardDecoration(),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(
-                width: 36,
-                height: 36,
-                child: CircularProgressIndicator(
-                  strokeWidth: 3,
-                  color: SynapserTheme.accentBlue,
-                ),
-              ),
-              if (message != null) ...[
-                const SizedBox(height: 16),
-                Text(
-                  message!,
-                  style: const TextStyle(
-                    color: SynapserTheme.labelSecondary,
-                    fontSize: 15,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(24),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
+            child: Container(
+              padding: const EdgeInsets.all(32),
+              decoration: SynapserTheme.liquidGlassDecoration(),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(
+                    width: 36,
+                    height: 36,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 3,
+                      color: SynapserTheme.tintBlue,
+                    ),
                   ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ],
+                  if (message != null) ...[
+                    const SizedBox(height: 16),
+                    Text(
+                      message!,
+                      style: const TextStyle(
+                        color: SynapserTheme.labelSecondary,
+                        fontSize: 15,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ],
+              ),
+            ),
           ),
         ),
       ),

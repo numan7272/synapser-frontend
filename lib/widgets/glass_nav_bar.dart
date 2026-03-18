@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../config/theme.dart';
 
@@ -20,24 +21,45 @@ class GlassNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: SynapserTheme.backgroundSecondary,
-        border: Border(
-          top: BorderSide(color: SynapserTheme.separator.withValues(alpha: 0.3)),
-        ),
-      ),
-      child: SafeArea(
-        top: false,
-        child: SizedBox(
-          height: 56,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: List.generate(_items.length, (index) {
-              final item = _items[index];
-              final isSelected = index == currentIndex;
-              return _buildNavItem(item, isSelected, () => onTap(index));
-            }),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(40, 0, 40, 28),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(28),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
+          child: Container(
+            height: 64,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.white.withValues(alpha: 0.65),
+                  Colors.white.withValues(alpha: 0.45),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(28),
+              border: Border.all(
+                color: Colors.white.withValues(alpha: 0.6),
+                width: 0.5,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.08),
+                  blurRadius: 24,
+                  offset: const Offset(0, 8),
+                  spreadRadius: -4,
+                ),
+              ],
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: List.generate(_items.length, (index) {
+                final item = _items[index];
+                final isSelected = index == currentIndex;
+                return _buildNavItem(item, isSelected, () => onTap(index));
+              }),
+            ),
           ),
         ),
       ),
@@ -49,16 +71,32 @@ class GlassNavBar extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: SizedBox(
-        width: 64,
+        width: 56,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              isSelected ? item.activeIcon : item.icon,
-              size: 24,
-              color: isSelected
-                  ? SynapserTheme.accentBlue
-                  : SynapserTheme.labelTertiary,
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 250),
+              curve: Curves.easeOutCubic,
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+              decoration: isSelected
+                  ? BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          SynapserTheme.tintBlue.withValues(alpha: 0.2),
+                          SynapserTheme.tintCyan.withValues(alpha: 0.1),
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                    )
+                  : null,
+              child: Icon(
+                isSelected ? item.activeIcon : item.icon,
+                size: 22,
+                color: isSelected
+                    ? SynapserTheme.tintBlue
+                    : SynapserTheme.labelTertiary,
+              ),
             ),
             const SizedBox(height: 2),
             Text(
@@ -67,7 +105,7 @@ class GlassNavBar extends StatelessWidget {
                 fontSize: 10,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
                 color: isSelected
-                    ? SynapserTheme.accentBlue
+                    ? SynapserTheme.tintBlue
                     : SynapserTheme.labelTertiary,
               ),
             ),

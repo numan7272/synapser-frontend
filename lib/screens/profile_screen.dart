@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
@@ -25,20 +26,37 @@ class ProfileScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 16),
 
-            Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                color: SynapserTheme.accentBlue.withValues(alpha: 0.1),
-                shape: BoxShape.circle,
-              ),
-              child: Center(
-                child: Text(
-                  user.email[0].toUpperCase(),
-                  style: const TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    color: SynapserTheme.accentBlue,
+            // Avatar - Liquid Glass circle
+            ClipOval(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                child: Container(
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        SynapserTheme.tintBlue.withValues(alpha: 0.3),
+                        SynapserTheme.tintPurple.withValues(alpha: 0.2),
+                      ],
+                    ),
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: 0.5),
+                      width: 0.5,
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      user.email[0].toUpperCase(),
+                      style: const TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        color: SynapserTheme.tintBlue,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -86,12 +104,16 @@ class ProfileScreen extends StatelessWidget {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 5),
                                 decoration: BoxDecoration(
-                                  color: SynapserTheme.accentBlue.withValues(alpha: 0.08),
-                                  borderRadius: BorderRadius.circular(8),
+                                  color: SynapserTheme.tintBlue.withValues(alpha: 0.1),
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color: SynapserTheme.tintBlue.withValues(alpha: 0.2),
+                                    width: 0.5,
+                                  ),
                                 ),
                                 child: Text(h,
                                     style: const TextStyle(
-                                        color: SynapserTheme.accentBlue,
+                                        color: SynapserTheme.tintBlue,
                                         fontSize: 13,
                                         fontWeight: FontWeight.w500)),
                               );
@@ -112,7 +134,7 @@ class ProfileScreen extends StatelessWidget {
                 label: s.logout,
                 icon: Icons.logout_rounded,
                 isPrimary: false,
-                color: SynapserTheme.accentRed,
+                color: SynapserTheme.tintRed,
                 onPressed: () => auth.logout(),
               ),
             ).animate().fadeIn(delay: 200.ms, duration: 400.ms),
@@ -121,7 +143,7 @@ class ProfileScreen extends StatelessWidget {
             const Text(
               'Synapser v2.0.0',
               style: TextStyle(
-                  color: SynapserTheme.labelQuaternary, fontSize: 13),
+                  color: SynapserTheme.labelTertiary, fontSize: 13),
             ),
           ],
         ),
@@ -132,7 +154,7 @@ class ProfileScreen extends StatelessWidget {
   Widget _buildDivider() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
-      child: Divider(height: 1, color: SynapserTheme.separator.withValues(alpha: 0.3)),
+      child: Divider(height: 1, color: Colors.white.withValues(alpha: 0.3)),
     );
   }
 

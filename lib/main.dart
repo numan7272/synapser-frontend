@@ -44,7 +44,7 @@ class SynapserApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Synapser',
         debugShowCheckedModeBanner: false,
-        theme: SynapserTheme.lightTheme,
+        theme: SynapserTheme.liquidGlassTheme,
         locale: const Locale('de', 'DE'),
         supportedLocales: const [
           Locale('de', 'DE'),

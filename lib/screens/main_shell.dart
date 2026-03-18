@@ -38,15 +38,17 @@ class _MainShellState extends State<MainShell> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: SynapserTheme.backgroundPrimary,
-      body: IndexedStack(
-        index: _currentIndex == 1 ? 0 : _currentIndex,
-        children: _screens,
-      ),
-      bottomNavigationBar: GlassNavBar(
-        currentIndex: _currentIndex,
-        onTap: _onTabTapped,
+    return SynapserTheme.meshGradientBackground(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: IndexedStack(
+          index: _currentIndex == 1 ? 0 : _currentIndex,
+          children: _screens,
+        ),
+        bottomNavigationBar: GlassNavBar(
+          currentIndex: _currentIndex,
+          onTap: _onTabTapped,
+        ),
       ),
     );
   }
