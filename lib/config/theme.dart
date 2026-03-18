@@ -1,6 +1,6 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:liquid_glass_widgets/liquid_glass_widgets.dart';
 
 class SynapserTheme {
   // iOS 26 Liquid Glass - Base colors
@@ -31,82 +31,61 @@ class SynapserTheme {
   static const double glassBorderOpacity = 0.35;
   static const double glassSpecularOpacity = 0.5;
 
-  /// Liquid Glass material - translucent with strong blur and specular edge
-  static BoxDecoration liquidGlassDecoration({
-    double? borderRadius,
-    Color? tintColor,
-    double? opacity,
-  }) {
-    final tint = tintColor ?? Colors.white;
-    final op = opacity ?? glassOpacity;
-    return BoxDecoration(
-      gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [
-          tint.withValues(alpha: op),
-          tint.withValues(alpha: op * 0.6),
-        ],
-      ),
-      borderRadius: BorderRadius.circular(borderRadius ?? glassRadius),
-      border: Border.all(
-        color: Colors.white.withValues(alpha: glassBorderOpacity),
-        width: 0.5,
-      ),
-      boxShadow: [
-        // Outer shadow for depth
-        BoxShadow(
-          color: Colors.black.withValues(alpha: 0.08),
-          blurRadius: 24,
-          offset: const Offset(0, 8),
-          spreadRadius: -4,
+  /// Liquid Glass theme data for the package
+  static GlassThemeData get glassThemeData {
+    return GlassThemeData(
+      light: GlassThemeVariant(
+        settings: LiquidGlassSettings(
+          thickness: 30,
+          blur: 12,
+          lightIntensity: 2.0,
         ),
-        // Inner specular highlight (simulated)
-        BoxShadow(
-          color: Colors.white.withValues(alpha: 0.25),
-          blurRadius: 1,
-          offset: const Offset(0, 0.5),
+        quality: GlassQuality.standard,
+        glowColors: GlassGlowColors(
+          primary: tintBlue.withOpacity(0.3),
+          secondary: tintPurple.withOpacity(0.3),
+          success: tintGreen.withOpacity(0.3),
+          warning: tintOrange.withOpacity(0.3),
+          danger: tintRed.withOpacity(0.3),
         ),
-      ],
-    );
-  }
-
-  /// Tinted Liquid Glass with color accent
-  static BoxDecoration tintedGlassDecoration(Color accentColor) {
-    return BoxDecoration(
-      gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [
-          accentColor.withValues(alpha: 0.18),
-          accentColor.withValues(alpha: 0.08),
-        ],
       ),
-      borderRadius: BorderRadius.circular(glassRadius),
-      border: Border.all(
-        color: accentColor.withValues(alpha: 0.25),
-        width: 0.5,
+      dark: GlassThemeVariant(
+        settings: LiquidGlassSettings(
+          thickness: 25,
+          blur: 15,
+          lightIntensity: 1.5,
+        ),
+        quality: GlassQuality.standard,
+        glowColors: GlassGlowColors(
+          primary: tintBlue.withOpacity(0.4),
+          secondary: tintPurple.withOpacity(0.4),
+          success: tintGreen.withOpacity(0.4),
+          warning: tintOrange.withOpacity(0.4),
+          danger: tintRed.withOpacity(0.4),
+        ),
       ),
     );
   }
 
-  /// Vibrant mesh gradient background
+  /// Vibrant mesh gradient background with LiquidGlassScope for refraction
   static Widget meshGradientBackground({Widget? child}) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment(-1.0, -1.0),
-          end: Alignment(1.0, 1.0),
-          colors: [
-            Color(0xFFE8F0FE), // Light blue
-            Color(0xFFF5EEFF), // Light purple
-            Color(0xFFFFF0F0), // Light pink
-            Color(0xFFF0F8FF), // Ice blue
-          ],
-          stops: [0.0, 0.3, 0.6, 1.0],
+    return LiquidGlassScope.stack(
+      background: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment(-1.0, -1.0),
+            end: Alignment(1.0, 1.0),
+            colors: [
+              Color(0xFFE8F0FE), // Light blue
+              Color(0xFFF5EEFF), // Light purple
+              Color(0xFFFFF0F0), // Light pink
+              Color(0xFFF0F8FF), // Ice blue
+            ],
+            stops: [0.0, 0.3, 0.6, 1.0],
+          ),
         ),
       ),
-      child: child,
+      content: child ?? const SizedBox(),
     );
   }
 

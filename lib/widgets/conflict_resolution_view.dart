@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:liquid_glass_widgets/liquid_glass_widgets.dart' as lg;
 import '../config/theme.dart';
 import '../models/models.dart';
 import 'glass_card.dart';
@@ -26,10 +27,10 @@ class ConflictResolutionView extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(Icons.warning_amber_rounded,
+            const Icon(Icons.warning_amber_rounded,
                 color: SynapserTheme.tintOrange, size: 24),
             const SizedBox(width: 8),
-            Text(
+            const Text(
               'Planungskonflikt',
               style: TextStyle(
                 color: SynapserTheme.tintOrange,
@@ -42,12 +43,12 @@ class ConflictResolutionView extends StatelessWidget {
         const SizedBox(height: 12),
         Text(
           conflict.message,
-          style: TextStyle(color: SynapserTheme.labelSecondary, fontSize: 15),
+          style: const TextStyle(color: SynapserTheme.labelSecondary, fontSize: 15),
         ),
         const SizedBox(height: 16),
 
         if (conflict.conflictingEvents.isNotEmpty) ...[
-          Text(
+          const Text(
             'Betroffene Termine:',
             style: TextStyle(color: SynapserTheme.labelTertiary, fontSize: 13),
           ),
@@ -56,16 +57,7 @@ class ConflictResolutionView extends StatelessWidget {
             spacing: 8,
             runSpacing: 8,
             children: conflict.conflictingEvents.map((event) {
-              return Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: SynapserTheme.tintOrange.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                    color: SynapserTheme.tintOrange.withValues(alpha: 0.2),
-                    width: 0.5,
-                  ),
-                ),
+              return lg.GlassChip(
                 child: Text(
                   event.name,
                   style: const TextStyle(
@@ -80,7 +72,7 @@ class ConflictResolutionView extends StatelessWidget {
           const SizedBox(height: 20),
         ],
 
-        Text(
+        const Text(
           'Lösungsvorschläge:',
           style: TextStyle(color: SynapserTheme.labelTertiary, fontSize: 13),
         ),
@@ -106,7 +98,7 @@ class ConflictResolutionView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Icon(Icons.chevron_right_rounded,
+                  const Icon(Icons.chevron_right_rounded,
                       color: SynapserTheme.labelTertiary, size: 20),
                 ],
               ),

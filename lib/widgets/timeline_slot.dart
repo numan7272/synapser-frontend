@@ -1,6 +1,6 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:liquid_glass_widgets/liquid_glass_widgets.dart' as lg;
 import '../config/theme.dart';
 import '../models/models.dart';
 
@@ -38,7 +38,7 @@ class TimelineSlotWidget extends StatelessWidget {
               width: 52,
               child: Text(
                 timeFormat.format(startLocal),
-                style: TextStyle(
+                style: const TextStyle(
                   color: SynapserTheme.labelTertiary,
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
@@ -55,7 +55,7 @@ class TimelineSlotWidget extends StatelessWidget {
                     color: _accentColor,
                     boxShadow: [
                       BoxShadow(
-                        color: _accentColor.withValues(alpha: 0.35),
+                        color: _accentColor.withOpacity(0.35),
                         blurRadius: 6,
                       ),
                     ],
@@ -65,7 +65,7 @@ class TimelineSlotWidget extends StatelessWidget {
                   Expanded(
                     child: Container(
                       width: 1,
-                      color: SynapserTheme.labelTertiary.withValues(alpha: 0.2),
+                      color: SynapserTheme.labelTertiary.withOpacity(0.2),
                     ),
                   ),
               ],
@@ -74,57 +74,40 @@ class TimelineSlotWidget extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 12),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 25, sigmaY: 25),
-                    child: Container(
-                      padding: const EdgeInsets.all(14),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            Colors.white.withValues(alpha: 0.55),
-                            Colors.white.withValues(alpha: 0.35),
-                          ],
-                        ),
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border(
-                          left: BorderSide(color: _accentColor, width: 3),
-                          top: BorderSide(color: Colors.white.withValues(alpha: 0.5)),
-                          right: BorderSide(color: Colors.white.withValues(alpha: 0.3)),
-                          bottom: BorderSide(color: Colors.white.withValues(alpha: 0.2)),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.04),
-                            blurRadius: 12,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
+                child: lg.GlassContainer(
+                  useOwnLayer: true,
+                  settings: lg.LiquidGlassSettings(
+                    thickness: 25,
+                    blur: 10,
+                    glassColor: Colors.white.withOpacity(0.15),
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      border: Border(
+                        left: BorderSide(color: _accentColor, width: 3),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            slot.name,
-                            style: const TextStyle(
-                              color: SynapserTheme.labelPrimary,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                            ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          slot.name,
+                          style: const TextStyle(
+                            color: SynapserTheme.labelPrimary,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 4),
-                          Text(
-                            '${timeFormat.format(startLocal)} - ${timeFormat.format(endLocal)}  ·  ${slot.durationMinutes} Min.',
-                            style: TextStyle(
-                              color: SynapserTheme.labelSecondary,
-                              fontSize: 13,
-                            ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          '${timeFormat.format(startLocal)} - ${timeFormat.format(endLocal)}  ·  ${slot.durationMinutes} Min.',
+                          style: const TextStyle(
+                            color: SynapserTheme.labelSecondary,
+                            fontSize: 13,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

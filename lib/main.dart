@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:liquid_glass_widgets/liquid_glass_widgets.dart';
 import 'package:provider/provider.dart';
 import 'config/theme.dart';
 import 'providers/auth_provider.dart';
@@ -15,6 +16,7 @@ import 'services/auth_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await LiquidGlassWidgets.initialize();
   await initializeDateFormatting('de_DE');
   await initializeDateFormatting('en_US');
   runApp(const SynapserApp());
@@ -41,20 +43,23 @@ class SynapserApp extends StatelessWidget {
           create: (_) => SuggestionProvider(apiService),
         ),
       ],
-      child: MaterialApp(
-        title: 'Synapser',
-        debugShowCheckedModeBanner: false,
-        theme: SynapserTheme.liquidGlassTheme,
-        locale: const Locale('de', 'DE'),
-        supportedLocales: const [
-          Locale('de', 'DE'),
-          Locale('en', 'US'),
-        ],
-        localizationsDelegates: const [
-          DefaultMaterialLocalizations.delegate,
-          DefaultWidgetsLocalizations.delegate,
-        ],
-        home: const _AuthGate(),
+      child: GlassTheme(
+        data: SynapserTheme.glassThemeData,
+        child: MaterialApp(
+          title: 'Synapser',
+          debugShowCheckedModeBanner: false,
+          theme: SynapserTheme.liquidGlassTheme,
+          locale: const Locale('de', 'DE'),
+          supportedLocales: const [
+            Locale('de', 'DE'),
+            Locale('en', 'US'),
+          ],
+          localizationsDelegates: const [
+            DefaultMaterialLocalizations.delegate,
+            DefaultWidgetsLocalizations.delegate,
+          ],
+          home: const _AuthGate(),
+        ),
       ),
     );
   }

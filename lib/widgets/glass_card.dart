@@ -1,6 +1,5 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
-import '../config/theme.dart';
+import 'package:liquid_glass_widgets/liquid_glass_widgets.dart' as lg;
 
 class GlassCard extends StatelessWidget {
   final Widget child;
@@ -22,22 +21,16 @@ class GlassCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final radius = borderRadius ?? SynapserTheme.glassRadius;
-
-    Widget card = ClipRRect(
-      borderRadius: BorderRadius.circular(radius),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(
-          sigmaX: SynapserTheme.glassBlurSigma,
-          sigmaY: SynapserTheme.glassBlurSigma,
-        ),
-        child: Container(
-          decoration: accentColor != null
-              ? SynapserTheme.tintedGlassDecoration(accentColor!)
-              : SynapserTheme.liquidGlassDecoration(borderRadius: radius),
-          padding: padding ?? const EdgeInsets.all(20),
-          child: child,
-        ),
+    Widget card = lg.GlassCard(
+      useOwnLayer: true,
+      settings: lg.LiquidGlassSettings(
+        thickness: 30,
+        blur: 12,
+        glassColor: accentColor?.withOpacity(0.15) ?? Colors.white.withOpacity(0.1),
+      ),
+      child: Padding(
+        padding: padding ?? const EdgeInsets.all(20),
+        child: child,
       ),
     );
 

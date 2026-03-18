@@ -1,6 +1,6 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:liquid_glass_widgets/liquid_glass_widgets.dart' as lg;
 import 'package:provider/provider.dart';
 import '../config/theme.dart';
 import '../l10n/l10n.dart';
@@ -96,14 +96,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     height: 8,
                     decoration: BoxDecoration(
                       gradient: i == _currentPage
-                          ? LinearGradient(
+                          ? const LinearGradient(
                               colors: [
                                 SynapserTheme.tintBlue,
                                 SynapserTheme.tintCyan,
                               ],
                             )
                           : null,
-                      color: i == _currentPage ? null : SynapserTheme.labelTertiary.withValues(alpha: 0.3),
+                      color: i == _currentPage ? null : SynapserTheme.labelTertiary.withOpacity(0.3),
                       borderRadius: BorderRadius.circular(4),
                     ),
                   );
@@ -173,8 +173,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         runSpacing: 8,
         children: _hobbyOptions.map((hobby) {
           final selected = _selectedHobbies.contains(hobby);
-          return FilterChip(
-            label: Text(hobby),
+          return lg.GlassChip(
             selected: selected,
             onSelected: (v) {
               setState(() {
@@ -185,20 +184,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 }
               });
             },
-            selectedColor: SynapserTheme.tintBlue.withValues(alpha: 0.15),
-            backgroundColor: Colors.white.withValues(alpha: 0.5),
-            labelStyle: TextStyle(
-              color: selected ? SynapserTheme.tintBlue : SynapserTheme.labelSecondary,
-              fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
-            ),
-            side: BorderSide(
-              color: selected
-                  ? SynapserTheme.tintBlue.withValues(alpha: 0.4)
-                  : Colors.white.withValues(alpha: 0.6),
-              width: 0.5,
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+            child: Text(
+              hobby,
+              style: TextStyle(
+                color: selected ? SynapserTheme.tintBlue : SynapserTheme.labelSecondary,
+                fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
+              ),
             ),
           );
         }).toList(),
@@ -238,31 +229,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-              child: Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      SynapserTheme.tintBlue.withValues(alpha: 0.25),
-                      SynapserTheme.tintCyan.withValues(alpha: 0.15),
-                    ],
-                  ),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.5),
-                    width: 0.5,
-                  ),
-                ),
-                child: Icon(icon, size: 28, color: SynapserTheme.tintBlue),
-              ),
+          lg.GlassContainer(
+            useOwnLayer: true,
+            width: 60,
+            height: 60,
+            settings: lg.LiquidGlassSettings(
+              thickness: 25,
+              blur: 10,
+              glassColor: SynapserTheme.tintBlue.withOpacity(0.15),
             ),
+            child: Icon(icon, size: 28, color: SynapserTheme.tintBlue),
           ).animate().scale(duration: 400.ms, curve: Curves.easeOutBack),
           const SizedBox(height: 24),
           Text(

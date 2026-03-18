@@ -41,6 +41,7 @@ class _MainShellState extends State<MainShell> {
     return SynapserTheme.meshGradientBackground(
       child: Scaffold(
         backgroundColor: Colors.transparent,
+        extendBody: true,
         body: IndexedStack(
           index: _currentIndex == 1 ? 0 : _currentIndex,
           children: _screens,

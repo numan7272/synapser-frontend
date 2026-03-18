@@ -1,6 +1,6 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:liquid_glass_widgets/liquid_glass_widgets.dart' as lg;
 import 'package:provider/provider.dart';
 import '../config/theme.dart';
 import '../l10n/l10n.dart';
@@ -26,37 +26,24 @@ class ProfileScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 16),
 
-            // Avatar - Liquid Glass circle
-            ClipOval(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-                child: Container(
-                  width: 80,
-                  height: 80,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        SynapserTheme.tintBlue.withValues(alpha: 0.3),
-                        SynapserTheme.tintPurple.withValues(alpha: 0.2),
-                      ],
-                    ),
-                    border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.5),
-                      width: 0.5,
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      user.email[0].toUpperCase(),
-                      style: const TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        color: SynapserTheme.tintBlue,
-                      ),
-                    ),
+            // Avatar - Liquid Glass circle with shader
+            lg.GlassContainer(
+              useOwnLayer: true,
+              width: 80,
+              height: 80,
+              shape: BoxShape.circle,
+              settings: lg.LiquidGlassSettings(
+                thickness: 25,
+                blur: 10,
+                glassColor: SynapserTheme.tintBlue.withOpacity(0.2),
+              ),
+              child: Center(
+                child: Text(
+                  user.email[0].toUpperCase(),
+                  style: const TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: SynapserTheme.tintBlue,
                   ),
                 ),
               ),
@@ -100,17 +87,7 @@ class ProfileScreen extends StatelessWidget {
                             spacing: 6,
                             runSpacing: 6,
                             children: user.hobbies.map((h) {
-                              return Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 5),
-                                decoration: BoxDecoration(
-                                  color: SynapserTheme.tintBlue.withValues(alpha: 0.1),
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                    color: SynapserTheme.tintBlue.withValues(alpha: 0.2),
-                                    width: 0.5,
-                                  ),
-                                ),
+                              return lg.GlassChip(
                                 child: Text(h,
                                     style: const TextStyle(
                                         color: SynapserTheme.tintBlue,
@@ -154,7 +131,7 @@ class ProfileScreen extends StatelessWidget {
   Widget _buildDivider() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
-      child: Divider(height: 1, color: Colors.white.withValues(alpha: 0.3)),
+      child: Divider(height: 1, color: Colors.white.withOpacity(0.3)),
     );
   }
 

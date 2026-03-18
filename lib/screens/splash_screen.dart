@@ -1,6 +1,6 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:liquid_glass_widgets/liquid_glass_widgets.dart' as lg;
 import '../config/theme.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -15,42 +15,20 @@ class SplashScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Liquid Glass logo
-              ClipRRect(
-                borderRadius: BorderRadius.circular(22),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-                  child: Container(
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          SynapserTheme.tintBlue.withValues(alpha: 0.6),
-                          SynapserTheme.tintPurple.withValues(alpha: 0.4),
-                        ],
-                      ),
-                      borderRadius: BorderRadius.circular(22),
-                      border: Border.all(
-                        color: Colors.white.withValues(alpha: 0.5),
-                        width: 0.5,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: SynapserTheme.tintBlue.withValues(alpha: 0.3),
-                          blurRadius: 20,
-                          offset: const Offset(0, 8),
-                        ),
-                      ],
-                    ),
-                    child: const Icon(
-                      Icons.auto_awesome_rounded,
-                      color: Colors.white,
-                      size: 36,
-                    ),
-                  ),
+              // Liquid Glass logo with shader-based rendering
+              lg.GlassContainer(
+                useOwnLayer: true,
+                width: 80,
+                height: 80,
+                settings: lg.LiquidGlassSettings(
+                  thickness: 35,
+                  blur: 12,
+                  glassColor: SynapserTheme.tintBlue.withOpacity(0.35),
+                ),
+                child: const Icon(
+                  Icons.auto_awesome_rounded,
+                  color: Colors.white,
+                  size: 36,
                 ),
               ).animate(onPlay: (c) => c.repeat(reverse: true))
                   .scale(begin: const Offset(0.95, 0.95), end: const Offset(1.05, 1.05), duration: 2000.ms),
@@ -76,13 +54,10 @@ class SplashScreen extends StatelessWidget {
                 ),
               ).animate().fadeIn(delay: 400.ms, duration: 600.ms),
               const SizedBox(height: 48),
-              const SizedBox(
-                width: 24,
-                height: 24,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2.5,
-                  color: SynapserTheme.tintBlue,
-                ),
+              lg.GlassProgressIndicator.circular(
+                size: 24,
+                strokeWidth: 2.5,
+                color: SynapserTheme.tintBlue,
               ).animate().fadeIn(delay: 600.ms),
             ],
           ),

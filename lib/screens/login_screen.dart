@@ -1,6 +1,6 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:liquid_glass_widgets/liquid_glass_widgets.dart' as lg;
 import 'package:provider/provider.dart';
 import '../config/theme.dart';
 import '../l10n/l10n.dart';
@@ -67,34 +67,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     // Liquid Glass logo
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(18),
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-                        child: Container(
-                          width: 64,
-                          height: 64,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                SynapserTheme.tintBlue.withValues(alpha: 0.6),
-                                SynapserTheme.tintPurple.withValues(alpha: 0.4),
-                              ],
-                            ),
-                            borderRadius: BorderRadius.circular(18),
-                            border: Border.all(
-                              color: Colors.white.withValues(alpha: 0.5),
-                              width: 0.5,
-                            ),
-                          ),
-                          child: const Icon(
-                            Icons.auto_awesome_rounded,
-                            color: Colors.white,
-                            size: 28,
-                          ),
-                        ),
+                    lg.GlassContainer(
+                      useOwnLayer: true,
+                      width: 64,
+                      height: 64,
+                      settings: lg.LiquidGlassSettings(
+                        thickness: 30,
+                        blur: 10,
+                        glassColor: SynapserTheme.tintBlue.withOpacity(0.35),
+                      ),
+                      child: const Icon(
+                        Icons.auto_awesome_rounded,
+                        color: Colors.white,
+                        size: 28,
                       ),
                     ).animate().scale(duration: 400.ms, curve: Curves.easeOutBack),
                     const SizedBox(height: 12),
