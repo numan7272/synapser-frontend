@@ -33,39 +33,31 @@ class _SuggestionsScreenState extends State<SuggestionsScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
-            child: Row(
-              children: [
-                const Icon(Icons.lightbulb_outline_rounded,
-                    color: SynapserTheme.accentPurple, size: 24),
-                const SizedBox(width: 8),
-                Text(
-                  s.suggestions,
-                  style: const TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
+            child: Text(
+              s.suggestions,
+              style: const TextStyle(
+                fontSize: 34,
+                fontWeight: FontWeight.bold,
+                color: SynapserTheme.labelPrimary,
+                letterSpacing: -0.5,
+              ),
             ),
           ),
 
-          // Content
           Expanded(
             child: provider.isLoading
                 ? const Center(
                     child: CircularProgressIndicator(
-                      color: SynapserTheme.accentTeal,
+                      color: SynapserTheme.accentBlue,
                     ),
                   )
                 : provider.suggestions.isEmpty
                     ? _buildEmptyState(s)
                     : RefreshIndicator(
-                        color: SynapserTheme.accentTeal,
-                        backgroundColor: SynapserTheme.backgroundDark,
+                        color: SynapserTheme.accentBlue,
+                        backgroundColor: SynapserTheme.backgroundSecondary,
                         onRefresh: provider.fetchSuggestions,
                         child: ListView.builder(
                           padding: const EdgeInsets.fromLTRB(16, 0, 16, 100),
@@ -81,17 +73,17 @@ class _SuggestionsScreenState extends State<SuggestionsScreen> {
                                     Text(
                                       suggestion.title,
                                       style: const TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 17,
                                         fontWeight: FontWeight.w600,
-                                        color: SynapserTheme.accentTeal,
+                                        color: SynapserTheme.accentBlue,
                                       ),
                                     ),
                                     const SizedBox(height: 8),
                                     Text(
                                       suggestion.description,
-                                      style: TextStyle(
-                                        color: Colors.white.withValues(alpha: 0.6),
-                                        fontSize: 14,
+                                      style: const TextStyle(
+                                        color: SynapserTheme.labelSecondary,
+                                        fontSize: 15,
                                         height: 1.4,
                                       ),
                                     ),
@@ -107,8 +99,7 @@ class _SuggestionsScreenState extends State<SuggestionsScreen> {
                                                   context.read<ScheduleProvider>();
                                               final success =
                                                   await scheduleProvider.addTaskWithAi(
-                                                suggestion
-                                                    .eventToSchedule.name,
+                                                suggestion.eventToSchedule.name,
                                               );
                                               if (mounted) {
                                                 if (success) {
@@ -155,16 +146,18 @@ class _SuggestionsScreenState extends State<SuggestionsScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(Icons.lightbulb_outline_rounded,
-              size: 56, color: Colors.white.withValues(alpha: 0.15)),
+              size: 56, color: SynapserTheme.labelQuaternary),
           const SizedBox(height: 16),
           Text(s.noSuggestions,
-              style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.4), fontSize: 16)),
+              style: const TextStyle(
+                  color: SynapserTheme.labelTertiary,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600)),
           const SizedBox(height: 8),
           Text(s.noSuggestionsHint,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.3), fontSize: 13)),
+              style: const TextStyle(
+                  color: SynapserTheme.labelQuaternary, fontSize: 15)),
         ],
       ),
     );

@@ -18,14 +18,13 @@ class _MainShellState extends State<MainShell> {
 
   final _screens = const [
     HomeScreen(),
-    SizedBox(), // Placeholder - "Add" opens bottom sheet
+    SizedBox(),
     SuggestionsScreen(),
     ProfileScreen(),
   ];
 
   void _onTabTapped(int index) {
     if (index == 1) {
-      // Open AI Task Input
       showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -39,18 +38,15 @@ class _MainShellState extends State<MainShell> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(gradient: SynapserTheme.backgroundGradient),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: IndexedStack(
-          index: _currentIndex == 1 ? 0 : _currentIndex,
-          children: _screens,
-        ),
-        bottomNavigationBar: GlassNavBar(
-          currentIndex: _currentIndex,
-          onTap: _onTabTapped,
-        ),
+    return Scaffold(
+      backgroundColor: SynapserTheme.backgroundPrimary,
+      body: IndexedStack(
+        index: _currentIndex == 1 ? 0 : _currentIndex,
+        children: _screens,
+      ),
+      bottomNavigationBar: GlassNavBar(
+        currentIndex: _currentIndex,
+        onTap: _onTabTapped,
       ),
     );
   }

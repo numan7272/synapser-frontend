@@ -25,21 +25,12 @@ class ProfileScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 16),
 
-            // Avatar
             Container(
               width: 80,
               height: 80,
               decoration: BoxDecoration(
+                color: SynapserTheme.accentBlue.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
-                gradient: LinearGradient(
-                  colors: [
-                    SynapserTheme.accentTeal.withValues(alpha: 0.3),
-                    SynapserTheme.accentPurple.withValues(alpha: 0.3),
-                  ],
-                ),
-                border: Border.all(
-                  color: SynapserTheme.accentTeal.withValues(alpha: 0.4),
-                ),
               ),
               child: Center(
                 child: Text(
@@ -47,7 +38,7 @@ class ProfileScreen extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: SynapserTheme.accentBlue,
                   ),
                 ),
               ),
@@ -55,38 +46,36 @@ class ProfileScreen extends StatelessWidget {
             const SizedBox(height: 12),
             Text(
               user.email,
-              style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.6), fontSize: 14),
+              style: const TextStyle(
+                  color: SynapserTheme.labelSecondary, fontSize: 15),
             ),
             const SizedBox(height: 32),
 
-            // Profile Info
             GlassCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(s.profile,
                       style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white)),
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: SynapserTheme.labelPrimary)),
                   const SizedBox(height: 16),
                   _buildInfoRow(Icons.work_outline_rounded, s.occupation,
                       user.occupation ?? '-'),
-                  const SizedBox(height: 12),
+                  _buildDivider(),
                   _buildInfoRow(Icons.schedule_rounded, s.workHours,
                       user.workHours ?? '-'),
-                  const SizedBox(height: 12),
+                  _buildDivider(),
                   _buildInfoRow(Icons.location_on_outlined, s.location,
                       user.homeLocation),
                   if (user.hobbies.isNotEmpty) ...[
-                    const SizedBox(height: 12),
+                    _buildDivider(),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(Icons.favorite_border_rounded,
-                            color: Colors.white.withValues(alpha: 0.5),
-                            size: 18),
+                        const Icon(Icons.favorite_border_rounded,
+                            color: SynapserTheme.labelTertiary, size: 20),
                         const SizedBox(width: 12),
                         Expanded(
                           child: Wrap(
@@ -95,19 +84,16 @@ class ProfileScreen extends StatelessWidget {
                             children: user.hobbies.map((h) {
                               return Container(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 4),
+                                    horizontal: 10, vertical: 5),
                                 decoration: BoxDecoration(
-                                  color: SynapserTheme.accentTeal
-                                      .withValues(alpha: 0.15),
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                    color: SynapserTheme.accentTeal
-                                        .withValues(alpha: 0.3),
-                                  ),
+                                  color: SynapserTheme.accentBlue.withValues(alpha: 0.08),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Text(h,
                                     style: const TextStyle(
-                                        color: Colors.white70, fontSize: 12)),
+                                        color: SynapserTheme.accentBlue,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w500)),
                               );
                             }).toList(),
                           ),
@@ -120,24 +106,22 @@ class ProfileScreen extends StatelessWidget {
             ).animate().fadeIn(duration: 400.ms).slideY(begin: 0.05),
             const SizedBox(height: 20),
 
-            // Logout
             SizedBox(
               width: double.infinity,
               child: GlassButton(
                 label: s.logout,
                 icon: Icons.logout_rounded,
                 isPrimary: false,
-                color: SynapserTheme.errorRed,
+                color: SynapserTheme.accentRed,
                 onPressed: () => auth.logout(),
               ),
             ).animate().fadeIn(delay: 200.ms, duration: 400.ms),
             const SizedBox(height: 24),
 
-            // Version
-            Text(
+            const Text(
               'Synapser v2.0.0',
               style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.25), fontSize: 12),
+                  color: SynapserTheme.labelQuaternary, fontSize: 13),
             ),
           ],
         ),
@@ -145,19 +129,30 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildDivider() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: Divider(height: 1, color: SynapserTheme.separator.withValues(alpha: 0.3)),
+    );
+  }
+
   Widget _buildInfoRow(IconData icon, String label, String value) {
     return Row(
       children: [
-        Icon(icon, color: Colors.white.withValues(alpha: 0.5), size: 18),
+        Icon(icon, color: SynapserTheme.labelTertiary, size: 20),
         const SizedBox(width: 12),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(label,
-                style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.4), fontSize: 11)),
+                style: const TextStyle(
+                    color: SynapserTheme.labelTertiary, fontSize: 13)),
+            const SizedBox(height: 2),
             Text(value,
-                style: const TextStyle(color: Colors.white, fontSize: 14)),
+                style: const TextStyle(
+                    color: SynapserTheme.labelPrimary,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500)),
           ],
         ),
       ],

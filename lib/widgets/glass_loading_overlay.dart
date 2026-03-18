@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../config/theme.dart';
 
@@ -10,37 +9,34 @@ class GlassLoadingOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black.withValues(alpha: 0.3),
+      color: Colors.black.withValues(alpha: 0.15),
       child: Center(
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(24),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-            child: Container(
-              padding: const EdgeInsets.all(32),
-              decoration: SynapserTheme.glassDecoration(),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 3,
-                      color: SynapserTheme.accentTeal,
-                    ),
-                  ),
-                  if (message != null) ...[
-                    const SizedBox(height: 16),
-                    Text(
-                      message!,
-                      style: const TextStyle(color: Colors.white70, fontSize: 14),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ],
+        child: Container(
+          padding: const EdgeInsets.all(32),
+          decoration: SynapserTheme.cardDecoration(),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(
+                width: 36,
+                height: 36,
+                child: CircularProgressIndicator(
+                  strokeWidth: 3,
+                  color: SynapserTheme.accentBlue,
+                ),
               ),
-            ),
+              if (message != null) ...[
+                const SizedBox(height: 16),
+                Text(
+                  message!,
+                  style: const TextStyle(
+                    color: SynapserTheme.labelSecondary,
+                    fontSize: 15,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ],
           ),
         ),
       ),

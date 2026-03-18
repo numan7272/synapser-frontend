@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../config/theme.dart';
 
@@ -22,23 +21,12 @@ class GlassCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final radius = borderRadius ?? SynapserTheme.glassRadius;
-
-    Widget card = ClipRRect(
-      borderRadius: BorderRadius.circular(radius),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(
-          sigmaX: SynapserTheme.glassBlurSigma,
-          sigmaY: SynapserTheme.glassBlurSigma,
-        ),
-        child: Container(
-          decoration: accentColor != null
-              ? SynapserTheme.accentGlassDecoration(accentColor!)
-              : SynapserTheme.glassDecoration(borderRadius: radius),
-          padding: padding ?? const EdgeInsets.all(20),
-          child: child,
-        ),
-      ),
+    Widget card = Container(
+      decoration: accentColor != null
+          ? SynapserTheme.accentCardDecoration(accentColor!)
+          : SynapserTheme.cardDecoration(borderRadius: borderRadius),
+      padding: padding ?? const EdgeInsets.all(20),
+      child: child,
     );
 
     if (margin != null) {

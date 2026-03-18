@@ -33,7 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
             child: Row(
@@ -45,17 +44,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     Text(
                       isToday ? s.today : DateFormat('EEEE', S.locale(context)).format(_selectedDate),
                       style: const TextStyle(
-                        fontSize: 28,
+                        fontSize: 34,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: SynapserTheme.labelPrimary,
+                        letterSpacing: -0.5,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       DateFormat('d. MMMM yyyy', S.locale(context)).format(_selectedDate),
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white.withValues(alpha: 0.5),
+                      style: const TextStyle(
+                        fontSize: 15,
+                        color: SynapserTheme.labelTertiary,
                       ),
                     ),
                   ],
@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     IconButton(
                       icon: const Icon(Icons.calendar_month_rounded,
-                          color: Colors.white70),
+                          color: SynapserTheme.accentBlue),
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     IconButton(
                       icon: const Icon(Icons.upload_file_rounded,
-                          color: Colors.white70),
+                          color: SynapserTheme.accentBlue),
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -93,7 +93,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           const SizedBox(height: 16),
 
-          // AI Explanation Banner
           if (scheduleProvider.explanation != null)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -110,16 +109,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Text(
                         scheduleProvider.explanation!,
                         style: const TextStyle(
-                          color: Colors.white70,
-                          fontSize: 13,
+                          color: SynapserTheme.labelSecondary,
+                          fontSize: 14,
                           height: 1.4,
                         ),
                       ),
                     ),
                     GestureDetector(
                       onTap: scheduleProvider.clearExplanation,
-                      child: Icon(Icons.close_rounded,
-                          color: Colors.white.withValues(alpha: 0.4), size: 18),
+                      child: const Icon(Icons.close_rounded,
+                          color: SynapserTheme.labelQuaternary, size: 18),
                     ),
                   ],
                 ),
@@ -128,13 +127,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
           const SizedBox(height: 12),
 
-          // Timeline or Empty State
           Expanded(
             child: todaySlots.isEmpty
                 ? _buildEmptyState(s)
                 : RefreshIndicator(
-                    color: SynapserTheme.accentTeal,
-                    backgroundColor: SynapserTheme.backgroundDark,
+                    color: SynapserTheme.accentBlue,
+                    backgroundColor: SynapserTheme.backgroundSecondary,
                     onRefresh: () async {},
                     child: ListView.builder(
                       padding: const EdgeInsets.only(top: 8, bottom: 100),
@@ -163,24 +161,24 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Icon(
             Icons.event_available_rounded,
-            size: 64,
-            color: Colors.white.withValues(alpha: 0.15),
+            size: 56,
+            color: SynapserTheme.labelQuaternary,
           ),
           const SizedBox(height: 16),
           Text(
             s.noEventsToday,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
-              color: Colors.white.withValues(alpha: 0.4),
-              fontWeight: FontWeight.w500,
+              color: SynapserTheme.labelTertiary,
+              fontWeight: FontWeight.w600,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             s.addFirstTask,
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.white.withValues(alpha: 0.3),
+            style: const TextStyle(
+              fontSize: 15,
+              color: SynapserTheme.labelQuaternary,
             ),
           ),
           const SizedBox(height: 24),

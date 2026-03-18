@@ -53,118 +53,119 @@ class _ImportScreenState extends State<ImportScreen> {
     final scheduleProvider = context.watch<ScheduleProvider>();
     final s = S.of(context);
 
-    return Container(
-      decoration: BoxDecoration(gradient: SynapserTheme.backgroundGradient),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
-            onPressed: () => Navigator.pop(context),
-          ),
-          title: Text(s.importSchedule,
-              style: const TextStyle(color: Colors.white, fontSize: 18)),
+    return Scaffold(
+      backgroundColor: SynapserTheme.backgroundPrimary,
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_rounded, color: SynapserTheme.accentBlue),
+          onPressed: () => Navigator.pop(context),
         ),
-        body: Stack(
-          children: [
-            SafeArea(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(24),
-                child: scheduleProvider.activeConflict != null
-                    ? GlassCard(
-                        child: ConflictResolutionView(
-                          conflict: scheduleProvider.activeConflict!,
-                          isLoading: scheduleProvider.isLoading,
-                          onSuggestionChosen: (suggestion) async {
-                            final success = await scheduleProvider
-                                .resolveConflict(suggestion);
-                            if (success && mounted) {
-                              GlassToast.show(context,
-                                  message: s.conflictResolved,
-                                  type: ToastType.success);
-                              Navigator.pop(context);
-                            }
-                          },
-                          onCancel: () => scheduleProvider.clearConflict(),
-                        ),
-                      )
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          // Info
-                          GlassCard(
-                            child: Column(
-                              children: [
-                                const Icon(Icons.document_scanner_rounded,
-                                    color: SynapserTheme.accentTeal, size: 36),
-                                const SizedBox(height: 12),
-                                Text(s.importDescription,
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                        color: Colors.white70, fontSize: 14)),
-                              ],
-                            ),
-                          ).animate().fadeIn(duration: 400.ms),
-                          const SizedBox(height: 20),
-
-                          // Picker Buttons
-                          Row(
+        title: Text(s.importSchedule,
+            style: const TextStyle(color: SynapserTheme.labelPrimary, fontSize: 17, fontWeight: FontWeight.w600)),
+      ),
+      body: Stack(
+        children: [
+          SafeArea(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(24),
+              child: scheduleProvider.activeConflict != null
+                  ? GlassCard(
+                      child: ConflictResolutionView(
+                        conflict: scheduleProvider.activeConflict!,
+                        isLoading: scheduleProvider.isLoading,
+                        onSuggestionChosen: (suggestion) async {
+                          final success = await scheduleProvider
+                              .resolveConflict(suggestion);
+                          if (success && mounted) {
+                            GlassToast.show(context,
+                                message: s.conflictResolved,
+                                type: ToastType.success);
+                            Navigator.pop(context);
+                          }
+                        },
+                        onCancel: () => scheduleProvider.clearConflict(),
+                      ),
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        GlassCard(
+                          child: Column(
                             children: [
-                              Expanded(
-                                child: GlassButton(
-                                  label: s.takePhoto,
-                                  icon: Icons.camera_alt_outlined,
-                                  isPrimary: false,
-                                  onPressed: () =>
-                                      _pickImage(ImageSource.camera),
+                              Container(
+                                width: 48,
+                                height: 48,
+                                decoration: BoxDecoration(
+                                  color: SynapserTheme.accentBlue.withValues(alpha: 0.1),
+                                  borderRadius: BorderRadius.circular(12),
                                 ),
+                                child: const Icon(Icons.document_scanner_rounded,
+                                    color: SynapserTheme.accentBlue, size: 24),
                               ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: GlassButton(
-                                  label: s.fromGallery,
-                                  icon: Icons.photo_library_outlined,
-                                  isPrimary: false,
-                                  onPressed: () =>
-                                      _pickImage(ImageSource.gallery),
-                                ),
-                              ),
+                              const SizedBox(height: 12),
+                              Text(s.importDescription,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                      color: SynapserTheme.labelSecondary, fontSize: 15)),
                             ],
                           ),
-                          const SizedBox(height: 20),
+                        ).animate().fadeIn(duration: 400.ms),
+                        const SizedBox(height: 20),
 
-                          // Preview
-                          if (_selectedFile != null) ...[
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Image.file(
-                                _selectedFile!,
-                                height: 250,
-                                width: double.infinity,
-                                fit: BoxFit.cover,
+                        Row(
+                          children: [
+                            Expanded(
+                              child: GlassButton(
+                                label: s.takePhoto,
+                                icon: Icons.camera_alt_outlined,
+                                isPrimary: false,
+                                onPressed: () =>
+                                    _pickImage(ImageSource.camera),
                               ),
-                            )
-                                .animate()
-                                .fadeIn(duration: 300.ms)
-                                .scale(begin: const Offset(0.95, 0.95)),
-                            const SizedBox(height: 20),
-                            GlassButton(
-                              label: s.importNow,
-                              icon: Icons.upload_rounded,
-                              isLoading: scheduleProvider.isLoading,
-                              onPressed: _import,
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: GlassButton(
+                                label: s.fromGallery,
+                                icon: Icons.photo_library_outlined,
+                                isPrimary: false,
+                                onPressed: () =>
+                                    _pickImage(ImageSource.gallery),
+                              ),
                             ),
                           ],
-                        ],
-                      ),
-              ),
-            ),
+                        ),
+                        const SizedBox(height: 20),
 
-            // Loading Overlay
-            if (scheduleProvider.isLoading)
-              GlassLoadingOverlay(message: s.aiAnalyzing),
-          ],
-        ),
+                        if (_selectedFile != null) ...[
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(16),
+                            child: Image.file(
+                              _selectedFile!,
+                              height: 250,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                              .animate()
+                              .fadeIn(duration: 300.ms)
+                              .scale(begin: const Offset(0.95, 0.95)),
+                          const SizedBox(height: 20),
+                          GlassButton(
+                            label: s.importNow,
+                            icon: Icons.upload_rounded,
+                            isLoading: scheduleProvider.isLoading,
+                            onPressed: _import,
+                          ),
+                        ],
+                      ],
+                    ),
+            ),
+          ),
+
+          if (scheduleProvider.isLoading)
+            GlassLoadingOverlay(message: s.aiAnalyzing),
+        ],
       ),
     );
   }

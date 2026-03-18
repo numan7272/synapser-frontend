@@ -57,20 +57,15 @@ class _AiTaskInputSheetState extends State<AiTaskInputSheet> {
       builder: (context, scrollController) {
         return Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                SynapserTheme.backgroundMid.withValues(alpha: 0.95),
-                SynapserTheme.backgroundDark.withValues(alpha: 0.98),
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
-            border: Border(
-              top: BorderSide(color: Colors.white.withValues(alpha: 0.1)),
-              left: BorderSide(color: Colors.white.withValues(alpha: 0.1)),
-              right: BorderSide(color: Colors.white.withValues(alpha: 0.1)),
-            ),
+            color: SynapserTheme.backgroundPrimary,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.1),
+                blurRadius: 20,
+                offset: const Offset(0, -4),
+              ),
+            ],
           ),
           child: SingleChildScrollView(
             controller: scrollController,
@@ -78,21 +73,19 @@ class _AiTaskInputSheetState extends State<AiTaskInputSheet> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Drag Handle
                 Center(
                   child: Container(
-                    width: 40,
-                    height: 4,
+                    width: 36,
+                    height: 5,
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.3),
-                      borderRadius: BorderRadius.circular(2),
+                      color: SynapserTheme.labelQuaternary,
+                      borderRadius: BorderRadius.circular(3),
                     ),
                   ),
                 ),
                 const SizedBox(height: 24),
 
                 if (scheduleProvider.activeConflict != null)
-                  // Conflict View
                   ConflictResolutionView(
                     conflict: scheduleProvider.activeConflict!,
                     isLoading: scheduleProvider.isLoading,
@@ -111,25 +104,31 @@ class _AiTaskInputSheetState extends State<AiTaskInputSheet> {
                     },
                   ).animate().fadeIn(duration: 300.ms)
                 else ...[
-                  // Title
                   Row(
                     children: [
-                      const Icon(Icons.auto_awesome_rounded,
-                          color: SynapserTheme.accentTeal, size: 22),
-                      const SizedBox(width: 8),
+                      Container(
+                        width: 32,
+                        height: 32,
+                        decoration: BoxDecoration(
+                          color: SynapserTheme.accentBlue.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: const Icon(Icons.auto_awesome_rounded,
+                            color: SynapserTheme.accentBlue, size: 18),
+                      ),
+                      const SizedBox(width: 10),
                       Text(
                         s.whatToSchedule,
                         style: const TextStyle(
                           fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          color: SynapserTheme.labelPrimary,
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 20),
 
-                  // Input
                   GlassTextField(
                     controller: _textController,
                     hintText: s.describeTask,
@@ -140,15 +139,14 @@ class _AiTaskInputSheetState extends State<AiTaskInputSheet> {
                   const SizedBox(height: 12),
                   Text(
                     s.taskExamples,
-                    style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.35),
-                      fontSize: 12,
+                    style: const TextStyle(
+                      color: SynapserTheme.labelQuaternary,
+                      fontSize: 13,
                       fontStyle: FontStyle.italic,
                     ),
                   ),
                   const SizedBox(height: 24),
 
-                  // Submit Button
                   SizedBox(
                     width: double.infinity,
                     child: GlassButton(

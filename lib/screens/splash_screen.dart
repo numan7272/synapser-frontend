@@ -7,67 +7,54 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(gradient: SynapserTheme.backgroundGradient),
-      child: Center(
+    return Scaffold(
+      backgroundColor: SynapserTheme.backgroundPrimary,
+      body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Logo Icon
             Container(
-              width: 80,
-              height: 80,
+              width: 72,
+              height: 72,
               decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: LinearGradient(
-                  colors: [
-                    SynapserTheme.accentTeal.withValues(alpha: 0.3),
-                    SynapserTheme.accentPurple.withValues(alpha: 0.3),
-                  ],
-                ),
-                border: Border.all(
-                  color: SynapserTheme.accentTeal.withValues(alpha: 0.4),
-                ),
+                color: SynapserTheme.accentBlue,
+                borderRadius: BorderRadius.circular(18),
               ),
               child: const Icon(
                 Icons.auto_awesome_rounded,
-                color: SynapserTheme.accentTeal,
-                size: 36,
+                color: Colors.white,
+                size: 32,
               ),
-            )
-                .animate(onPlay: (c) => c.repeat(reverse: true))
-                .shimmer(duration: 2000.ms, color: Colors.white24),
+            ).animate(onPlay: (c) => c.repeat(reverse: true))
+                .scale(begin: const Offset(0.95, 0.95), end: const Offset(1.05, 1.05), duration: 1500.ms),
             const SizedBox(height: 24),
-            // App Name
             const Text(
               'Synapser',
               style: TextStyle(
-                fontSize: 36,
+                fontSize: 34,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
-                letterSpacing: 2,
+                color: SynapserTheme.labelPrimary,
+                letterSpacing: -0.5,
               ),
             )
                 .animate()
                 .fadeIn(duration: 800.ms)
                 .slideY(begin: 0.3, curve: Curves.easeOutCubic),
             const SizedBox(height: 8),
-            Text(
+            const Text(
               'KI-gestützter Lebensplaner',
               style: TextStyle(
-                fontSize: 14,
-                color: Colors.white.withValues(alpha: 0.5),
+                fontSize: 15,
+                color: SynapserTheme.labelTertiary,
               ),
-            )
-                .animate()
-                .fadeIn(delay: 400.ms, duration: 600.ms),
+            ).animate().fadeIn(delay: 400.ms, duration: 600.ms),
             const SizedBox(height: 48),
             const SizedBox(
               width: 24,
               height: 24,
               child: CircularProgressIndicator(
-                strokeWidth: 2,
-                color: SynapserTheme.accentTeal,
+                strokeWidth: 2.5,
+                color: SynapserTheme.accentBlue,
               ),
             ).animate().fadeIn(delay: 600.ms),
           ],

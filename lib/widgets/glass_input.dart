@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../config/theme.dart';
 
 class GlassTextField extends StatelessWidget {
   final TextEditingController? controller;
@@ -41,34 +42,34 @@ class GlassTextField extends StatelessWidget {
       onChanged: onChanged,
       textInputAction: textInputAction,
       onEditingComplete: onEditingComplete,
-      style: const TextStyle(color: Colors.white, fontSize: 16),
-      cursorColor: Colors.white70,
+      style: const TextStyle(color: SynapserTheme.labelPrimary, fontSize: 17),
+      cursorColor: SynapserTheme.accentBlue,
       decoration: InputDecoration(
         hintText: hintText,
         labelText: labelText,
-        hintStyle: TextStyle(color: Colors.white.withValues(alpha: 0.4)),
-        labelStyle: TextStyle(color: Colors.white.withValues(alpha: 0.6)),
+        hintStyle: TextStyle(color: SynapserTheme.labelTertiary),
+        labelStyle: TextStyle(color: SynapserTheme.labelSecondary),
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
         filled: true,
-        fillColor: Colors.white.withValues(alpha: 0.08),
+        fillColor: SynapserTheme.backgroundTertiary.withValues(alpha: 0.5),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.15)),
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.15)),
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.4), width: 1.5),
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: SynapserTheme.accentBlue, width: 2),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(color: Color(0xFFFF5252)),
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: SynapserTheme.errorRed),
         ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       ),
     );
   }

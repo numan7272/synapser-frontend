@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../config/theme.dart';
 
@@ -80,9 +79,9 @@ class _ToastWidgetState extends State<_ToastWidget>
   @override
   Widget build(BuildContext context) {
     final (icon, color) = switch (widget.type) {
-      ToastType.success => (Icons.check_circle_rounded, SynapserTheme.accentTeal),
+      ToastType.success => (Icons.check_circle_rounded, SynapserTheme.accentGreen),
       ToastType.error => (Icons.error_rounded, SynapserTheme.errorRed),
-      ToastType.info => (Icons.info_rounded, SynapserTheme.accentPurple),
+      ToastType.info => (Icons.info_rounded, SynapserTheme.accentBlue),
     };
 
     return Positioned(
@@ -93,30 +92,34 @@ class _ToastWidgetState extends State<_ToastWidget>
         position: _slideAnimation,
         child: FadeTransition(
           opacity: _fadeAnimation,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: color.withValues(alpha: 0.3)),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            decoration: BoxDecoration(
+              color: SynapserTheme.backgroundSecondary,
+              borderRadius: BorderRadius.circular(14),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.1),
+                  blurRadius: 20,
+                  offset: const Offset(0, 4),
                 ),
-                child: Row(
-                  children: [
-                    Icon(icon, color: color, size: 20),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        widget.message,
-                        style: const TextStyle(color: Colors.white, fontSize: 14),
-                      ),
+              ],
+            ),
+            child: Row(
+              children: [
+                Icon(icon, color: color, size: 22),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    widget.message,
+                    style: const TextStyle(
+                      color: SynapserTheme.labelPrimary,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
                     ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
         ),

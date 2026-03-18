@@ -24,16 +24,15 @@ class ConflictResolutionView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        // Header
         Row(
           children: [
             Icon(Icons.warning_amber_rounded,
-                color: SynapserTheme.accentAmber, size: 24),
+                color: SynapserTheme.accentOrange, size: 24),
             const SizedBox(width: 8),
             Text(
               'Planungskonflikt',
               style: TextStyle(
-                color: SynapserTheme.accentAmber,
+                color: SynapserTheme.accentOrange,
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
               ),
@@ -43,15 +42,14 @@ class ConflictResolutionView extends StatelessWidget {
         const SizedBox(height: 12),
         Text(
           conflict.message,
-          style: TextStyle(color: Colors.white.withValues(alpha: 0.7), fontSize: 14),
+          style: TextStyle(color: SynapserTheme.labelSecondary, fontSize: 15),
         ),
         const SizedBox(height: 16),
 
-        // Konflikte
         if (conflict.conflictingEvents.isNotEmpty) ...[
           Text(
             'Betroffene Termine:',
-            style: TextStyle(color: Colors.white.withValues(alpha: 0.5), fontSize: 12),
+            style: TextStyle(color: SynapserTheme.labelTertiary, fontSize: 13),
           ),
           const SizedBox(height: 8),
           Wrap(
@@ -61,15 +59,16 @@ class ConflictResolutionView extends StatelessWidget {
               return Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
-                  color: SynapserTheme.accentAmber.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: SynapserTheme.accentAmber.withValues(alpha: 0.3),
-                  ),
+                  color: SynapserTheme.accentOrange.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
                   event.name,
-                  style: const TextStyle(color: Colors.white, fontSize: 12),
+                  style: const TextStyle(
+                    color: SynapserTheme.labelPrimary,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               );
             }).toList(),
@@ -77,10 +76,9 @@ class ConflictResolutionView extends StatelessWidget {
           const SizedBox(height: 20),
         ],
 
-        // Vorschläge
         Text(
           'Lösungsvorschläge:',
-          style: TextStyle(color: Colors.white.withValues(alpha: 0.5), fontSize: 12),
+          style: TextStyle(color: SynapserTheme.labelTertiary, fontSize: 13),
         ),
         const SizedBox(height: 8),
         ...conflict.suggestions.map((suggestion) {
@@ -88,21 +86,24 @@ class ConflictResolutionView extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 8),
             child: GlassCard(
               padding: const EdgeInsets.all(14),
-              accentColor: SynapserTheme.accentTeal,
+              accentColor: SynapserTheme.accentBlue,
               onTap: isLoading ? null : () => onSuggestionChosen(suggestion),
               child: Row(
                 children: [
                   const Icon(Icons.auto_fix_high_rounded,
-                      color: SynapserTheme.accentTeal, size: 18),
+                      color: SynapserTheme.accentBlue, size: 18),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(
                       suggestion.suggestionText,
-                      style: const TextStyle(color: Colors.white, fontSize: 14),
+                      style: const TextStyle(
+                        color: SynapserTheme.labelPrimary,
+                        fontSize: 15,
+                      ),
                     ),
                   ),
-                  const Icon(Icons.chevron_right_rounded,
-                      color: Colors.white38, size: 20),
+                  Icon(Icons.chevron_right_rounded,
+                      color: SynapserTheme.labelQuaternary, size: 20),
                 ],
               ),
             ),

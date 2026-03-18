@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../config/theme.dart';
 
@@ -13,38 +12,32 @@ class GlassNavBar extends StatelessWidget {
   });
 
   static const _items = [
-    _NavItem(icon: Icons.calendar_today_rounded, label: 'Home'),
-    _NavItem(icon: Icons.add_circle_outline_rounded, label: 'Planen'),
-    _NavItem(icon: Icons.lightbulb_outline_rounded, label: 'Tipps'),
-    _NavItem(icon: Icons.person_outline_rounded, label: 'Profil'),
+    _NavItem(icon: Icons.calendar_today_rounded, activeIcon: Icons.calendar_today, label: 'Home'),
+    _NavItem(icon: Icons.add_circle_outline_rounded, activeIcon: Icons.add_circle_rounded, label: 'Planen'),
+    _NavItem(icon: Icons.lightbulb_outline_rounded, activeIcon: Icons.lightbulb_rounded, label: 'Tipps'),
+    _NavItem(icon: Icons.person_outline_rounded, activeIcon: Icons.person_rounded, label: 'Profil'),
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(28),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 25, sigmaY: 25),
-          child: Container(
-            height: 72,
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.08),
-              borderRadius: BorderRadius.circular(28),
-              border: Border.all(
-                color: Colors.white.withValues(alpha: 0.12),
-                width: 1,
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: List.generate(_items.length, (index) {
-                final item = _items[index];
-                final isSelected = index == currentIndex;
-                return _buildNavItem(item, isSelected, () => onTap(index));
-              }),
-            ),
+    return Container(
+      decoration: BoxDecoration(
+        color: SynapserTheme.backgroundSecondary,
+        border: Border(
+          top: BorderSide(color: SynapserTheme.separator.withValues(alpha: 0.3)),
+        ),
+      ),
+      child: SafeArea(
+        top: false,
+        child: SizedBox(
+          height: 56,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: List.generate(_items.length, (index) {
+              final item = _items[index];
+              final isSelected = index == currentIndex;
+              return _buildNavItem(item, isSelected, () => onTap(index));
+            }),
           ),
         ),
       ),
@@ -60,32 +53,22 @@ class GlassNavBar extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-              decoration: isSelected
-                  ? BoxDecoration(
-                      color: SynapserTheme.accentTeal.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(14),
-                    )
-                  : null,
-              child: Icon(
-                item.icon,
-                size: 22,
-                color: isSelected
-                    ? SynapserTheme.accentTeal
-                    : Colors.white.withValues(alpha: 0.5),
-              ),
+            Icon(
+              isSelected ? item.activeIcon : item.icon,
+              size: 24,
+              color: isSelected
+                  ? SynapserTheme.accentBlue
+                  : SynapserTheme.labelTertiary,
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 2),
             Text(
               item.label,
               style: TextStyle(
                 fontSize: 10,
-                fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
                 color: isSelected
-                    ? SynapserTheme.accentTeal
-                    : Colors.white.withValues(alpha: 0.5),
+                    ? SynapserTheme.accentBlue
+                    : SynapserTheme.labelTertiary,
               ),
             ),
           ],
@@ -97,6 +80,7 @@ class GlassNavBar extends StatelessWidget {
 
 class _NavItem {
   final IconData icon;
+  final IconData activeIcon;
   final String label;
-  const _NavItem({required this.icon, required this.label});
+  const _NavItem({required this.icon, required this.activeIcon, required this.label});
 }

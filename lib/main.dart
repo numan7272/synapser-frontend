@@ -25,7 +25,6 @@ class SynapserApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Service-Instanzen
     final storageService = StorageService();
     final apiService = ApiService(storageService);
     final authService = AuthService(apiService, storageService);
@@ -45,7 +44,7 @@ class SynapserApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Synapser',
         debugShowCheckedModeBanner: false,
-        theme: SynapserTheme.darkTheme,
+        theme: SynapserTheme.lightTheme,
         locale: const Locale('de', 'DE'),
         supportedLocales: const [
           Locale('de', 'DE'),

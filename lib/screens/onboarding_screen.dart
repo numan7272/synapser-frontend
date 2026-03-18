@@ -77,73 +77,67 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     final s = S.of(context);
 
-    return Container(
-      decoration: BoxDecoration(gradient: SynapserTheme.backgroundGradient),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: SafeArea(
-          child: Column(
-            children: [
-              const SizedBox(height: 24),
-              // Progress Dots
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(4, (i) {
-                  return AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    margin: const EdgeInsets.symmetric(horizontal: 4),
-                    width: i == _currentPage ? 28 : 8,
-                    height: 8,
-                    decoration: BoxDecoration(
-                      color: i == _currentPage
-                          ? SynapserTheme.accentTeal
-                          : Colors.white.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                  );
-                }),
-              ),
-              const SizedBox(height: 32),
+    return Scaffold(
+      backgroundColor: SynapserTheme.backgroundPrimary,
+      body: SafeArea(
+        child: Column(
+          children: [
+            const SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(4, (i) {
+                return AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  width: i == _currentPage ? 28 : 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: i == _currentPage
+                        ? SynapserTheme.accentBlue
+                        : SynapserTheme.labelQuaternary,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                );
+              }),
+            ),
+            const SizedBox(height: 32),
 
-              // Pages
-              Expanded(
-                child: PageView(
-                  controller: _pageController,
-                  onPageChanged: (i) => setState(() => _currentPage = i),
-                  children: [
-                    _buildOccupationPage(s),
-                    _buildHobbiesPage(s),
-                    _buildWorkHoursPage(s),
-                    _buildLocationPage(s),
-                  ],
-                ),
+            Expanded(
+              child: PageView(
+                controller: _pageController,
+                onPageChanged: (i) => setState(() => _currentPage = i),
+                children: [
+                  _buildOccupationPage(s),
+                  _buildHobbiesPage(s),
+                  _buildWorkHoursPage(s),
+                  _buildLocationPage(s),
+                ],
               ),
+            ),
 
-              // Buttons
-              Padding(
-                padding: const EdgeInsets.all(24),
-                child: Row(
-                  children: [
-                    if (_currentPage < 3)
-                      Expanded(
-                        child: GlassButton(
-                          label: s.skip,
-                          isPrimary: false,
-                          onPressed: _nextPage,
-                        ),
-                      ),
-                    if (_currentPage < 3) const SizedBox(width: 12),
+            Padding(
+              padding: const EdgeInsets.all(24),
+              child: Row(
+                children: [
+                  if (_currentPage < 3)
                     Expanded(
                       child: GlassButton(
-                        label: _currentPage == 3 ? s.done : s.next,
+                        label: s.skip,
+                        isPrimary: false,
                         onPressed: _nextPage,
                       ),
                     ),
-                  ],
-                ),
+                  if (_currentPage < 3) const SizedBox(width: 12),
+                  Expanded(
+                    child: GlassButton(
+                      label: _currentPage == 3 ? s.done : s.next,
+                      onPressed: _nextPage,
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -181,18 +175,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 }
               });
             },
-            selectedColor: SynapserTheme.accentTeal.withValues(alpha: 0.3),
-            backgroundColor: Colors.white.withValues(alpha: 0.08),
+            selectedColor: SynapserTheme.accentBlue.withValues(alpha: 0.15),
+            backgroundColor: SynapserTheme.backgroundTertiary.withValues(alpha: 0.5),
             labelStyle: TextStyle(
-              color: selected ? SynapserTheme.accentTeal : Colors.white70,
+              color: selected ? SynapserTheme.accentBlue : SynapserTheme.labelSecondary,
+              fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
             ),
             side: BorderSide(
               color: selected
-                  ? SynapserTheme.accentTeal.withValues(alpha: 0.5)
-                  : Colors.white.withValues(alpha: 0.15),
+                  ? SynapserTheme.accentBlue.withValues(alpha: 0.4)
+                  : Colors.transparent,
             ),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(10),
             ),
           );
         }).toList(),
@@ -232,16 +227,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, size: 48, color: SynapserTheme.accentTeal)
-              .animate()
-              .scale(duration: 400.ms, curve: Curves.easeOutBack),
+          Container(
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              color: SynapserTheme.accentBlue.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: Icon(icon, size: 28, color: SynapserTheme.accentBlue),
+          ).animate().scale(duration: 400.ms, curve: Curves.easeOutBack),
           const SizedBox(height: 24),
           Text(
             title,
             style: const TextStyle(
               fontSize: 22,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              color: SynapserTheme.labelPrimary,
             ),
             textAlign: TextAlign.center,
           ),

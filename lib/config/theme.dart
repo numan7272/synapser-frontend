@@ -1,106 +1,88 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SynapserTheme {
-  // Farben
-  static const Color backgroundDark = Color(0xFF0A0E21);
-  static const Color backgroundMid = Color(0xFF1A1A3E);
-  static const Color backgroundLight = Color(0xFF0D2137);
-  static const Color accentTeal = Color(0xFF00D4AA);
-  static const Color accentPurple = Color(0xFF7B61FF);
-  static const Color accentOrange = Color(0xFFFF8A65);
-  static const Color accentAmber = Color(0xFFFFCA28);
-  static const Color glassWhite = Colors.white;
-  static const Color errorRed = Color(0xFFFF5252);
+  // Apple-style minimal colors
+  static const Color backgroundPrimary = Color(0xFFF2F2F7);
+  static const Color backgroundSecondary = Colors.white;
+  static const Color backgroundTertiary = Color(0xFFE5E5EA);
 
-  // Glass Konstanten
-  static const double glassRadius = 24.0;
-  static const double glassBorderOpacity = 0.15;
-  static const double glassBackgroundOpacity = 0.08;
-  static const double glassBlurSigma = 20.0;
+  static const Color labelPrimary = Color(0xFF000000);
+  static const Color labelSecondary = Color(0xFF3C3C43);
+  static const Color labelTertiary = Color(0xFF8E8E93);
+  static const Color labelQuaternary = Color(0xFFC7C7CC);
 
-  static BoxDecoration glassDecoration({
+  static const Color accentBlue = Color(0xFF007AFF);
+  static const Color accentGreen = Color(0xFF34C759);
+  static const Color accentOrange = Color(0xFFFF9500);
+  static const Color accentRed = Color(0xFFFF3B30);
+  static const Color accentPurple = Color(0xFFAF52DE);
+  static const Color accentTeal = Color(0xFF5AC8FA);
+
+  static const Color separator = Color(0xFFD1D1D6);
+  static const Color errorRed = Color(0xFFFF3B30);
+
+  static const double cardRadius = 16.0;
+
+  static BoxDecoration cardDecoration({
     double? borderRadius,
-    double? backgroundOpacity,
-    Color? borderColor,
+    Color? backgroundColor,
   }) {
     return BoxDecoration(
-      color: glassWhite.withValues(alpha: backgroundOpacity ?? glassBackgroundOpacity),
-      borderRadius: BorderRadius.circular(borderRadius ?? glassRadius),
-      border: Border.all(
-        color: (borderColor ?? glassWhite).withValues(alpha: glassBorderOpacity),
-        width: 1,
-      ),
+      color: backgroundColor ?? backgroundSecondary,
+      borderRadius: BorderRadius.circular(borderRadius ?? cardRadius),
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withValues(alpha: 0.15),
-          blurRadius: 20,
-          offset: const Offset(0, 8),
+          color: Colors.black.withValues(alpha: 0.04),
+          blurRadius: 10,
+          offset: const Offset(0, 2),
         ),
       ],
     );
   }
 
-  static BoxDecoration accentGlassDecoration(Color accentColor) {
+  static BoxDecoration accentCardDecoration(Color accentColor) {
     return BoxDecoration(
-      gradient: LinearGradient(
-        colors: [
-          accentColor.withValues(alpha: 0.2),
-          accentColor.withValues(alpha: 0.05),
-        ],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      ),
-      borderRadius: BorderRadius.circular(glassRadius),
-      border: Border.all(
-        color: accentColor.withValues(alpha: 0.3),
-        width: 1,
-      ),
+      color: accentColor.withValues(alpha: 0.08),
+      borderRadius: BorderRadius.circular(cardRadius),
     );
   }
 
-  static LinearGradient backgroundGradient = const LinearGradient(
-    colors: [backgroundDark, backgroundMid, backgroundLight],
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-  );
-
-  static Widget backgroundContainer({Widget? child}) {
-    return Container(
-      decoration: BoxDecoration(gradient: backgroundGradient),
-      child: child,
-    );
-  }
-
-  static ThemeData get darkTheme {
+  static ThemeData get lightTheme {
     final textTheme = GoogleFonts.interTextTheme(
       const TextTheme(
-        headlineLarge: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),
-        headlineMedium: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: Colors.white),
-        titleLarge: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white),
-        titleMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white),
-        bodyLarge: TextStyle(fontSize: 16, color: Colors.white),
-        bodyMedium: TextStyle(fontSize: 14, color: Colors.white70),
-        bodySmall: TextStyle(fontSize: 12, color: Colors.white54),
-        labelLarge: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white),
+        headlineLarge: TextStyle(fontSize: 34, fontWeight: FontWeight.bold, color: labelPrimary, letterSpacing: -0.5),
+        headlineMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: labelPrimary, letterSpacing: -0.5),
+        titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: labelPrimary),
+        titleMedium: TextStyle(fontSize: 17, fontWeight: FontWeight.w600, color: labelPrimary),
+        bodyLarge: TextStyle(fontSize: 17, color: labelPrimary),
+        bodyMedium: TextStyle(fontSize: 15, color: labelSecondary),
+        bodySmall: TextStyle(fontSize: 13, color: labelTertiary),
+        labelLarge: TextStyle(fontSize: 17, fontWeight: FontWeight.w600, color: accentBlue),
       ),
     );
 
     return ThemeData(
       useMaterial3: true,
-      brightness: Brightness.dark,
-      scaffoldBackgroundColor: Colors.transparent,
+      brightness: Brightness.light,
+      scaffoldBackgroundColor: backgroundPrimary,
       textTheme: textTheme,
-      colorScheme: const ColorScheme.dark(
-        primary: accentTeal,
+      colorScheme: const ColorScheme.light(
+        primary: accentBlue,
         secondary: accentPurple,
-        surface: backgroundDark,
+        surface: backgroundSecondary,
         error: errorRed,
       ),
       appBarTheme: const AppBarTheme(
-        backgroundColor: Colors.transparent,
+        backgroundColor: backgroundPrimary,
         elevation: 0,
+        scrolledUnderElevation: 0,
+        iconTheme: IconThemeData(color: accentBlue),
+        titleTextStyle: TextStyle(
+          color: labelPrimary,
+          fontSize: 17,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     );
   }

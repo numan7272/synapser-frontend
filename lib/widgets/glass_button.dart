@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../config/theme.dart';
 
@@ -29,7 +28,7 @@ class _GlassButtonState extends State<GlassButton> {
 
   @override
   Widget build(BuildContext context) {
-    final accentColor = widget.color ?? SynapserTheme.accentTeal;
+    final accentColor = widget.color ?? SynapserTheme.accentBlue;
 
     return GestureDetector(
       onTapDown: (_) => setState(() => _pressed = true),
@@ -41,63 +40,44 @@ class _GlassButtonState extends State<GlassButton> {
       child: AnimatedScale(
         scale: _pressed ? 0.97 : 1.0,
         duration: const Duration(milliseconds: 100),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-              decoration: BoxDecoration(
-                gradient: widget.isPrimary
-                    ? LinearGradient(
-                        colors: [
-                          accentColor.withValues(alpha: 0.4),
-                          accentColor.withValues(alpha: 0.2),
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      )
-                    : null,
-                color: widget.isPrimary
-                    ? null
-                    : Colors.white.withValues(alpha: 0.08),
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(
-                  color: widget.isPrimary
-                      ? accentColor.withValues(alpha: 0.5)
-                      : Colors.white.withValues(alpha: 0.15),
-                  width: 1,
-                ),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (widget.isLoading)
-                    SizedBox(
-                      width: 18,
-                      height: 18,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: Colors.white.withValues(alpha: 0.8),
-                      ),
-                    )
-                  else ...[
-                    if (widget.icon != null) ...[
-                      Icon(widget.icon, size: 18, color: Colors.white),
-                      const SizedBox(width: 8),
-                    ],
-                    Text(
-                      widget.label,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                      ),
+        child: AnimatedOpacity(
+          opacity: _pressed ? 0.7 : 1.0,
+          duration: const Duration(milliseconds: 100),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+            decoration: BoxDecoration(
+              color: widget.isPrimary ? accentColor : SynapserTheme.backgroundTertiary.withValues(alpha: 0.5),
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (widget.isLoading)
+                  SizedBox(
+                    width: 18,
+                    height: 18,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: widget.isPrimary ? Colors.white : accentColor,
                     ),
+                  )
+                else ...[
+                  if (widget.icon != null) ...[
+                    Icon(widget.icon, size: 18,
+                        color: widget.isPrimary ? Colors.white : accentColor),
+                    const SizedBox(width: 8),
                   ],
+                  Text(
+                    widget.label,
+                    style: TextStyle(
+                      color: widget.isPrimary ? Colors.white : accentColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                    ),
+                  ),
                 ],
-              ),
+              ],
             ),
           ),
         ),
