@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart' show VoidCallback;
 import '../config/api_config.dart';
 import '../models/models.dart';
 import 'storage_service.dart';
@@ -133,5 +134,3 @@ class ApiService {
     return SuggestionResponse.fromJson(response.data);
   }
 }
-
-typedef VoidCallback = void Function();

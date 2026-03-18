@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import '../models/models.dart';
 import '../services/auth_service.dart';
@@ -103,7 +104,11 @@ class AuthProvider extends ChangeNotifier {
   }
 
   String _parseError(dynamic e) {
-    if (e is DioExceptionType) return 'Netzwerkfehler. Bitte versuche es erneut.';
+    if (e is DioException) {
+      final detail = e.response?.data?['detail'];
+      if (detail is String) return detail;
+      return 'Netzwerkfehler. Bitte versuche es erneut.';
+    }
     return e.toString().replaceAll('Exception: ', '');
   }
 }
