@@ -31,7 +31,7 @@ class ProfileScreen extends StatelessWidget {
               useOwnLayer: true,
               width: 80,
               height: 80,
-              shape: BoxShape.circle,
+              shape: const lg.LiquidOval(),
               settings: lg.LiquidGlassSettings(
                 thickness: 25,
                 blur: 10,
@@ -86,13 +86,10 @@ class ProfileScreen extends StatelessWidget {
                           child: Wrap(
                             spacing: 6,
                             runSpacing: 6,
-                            children: user.hobbies.map((h) {
+                            children: user.hobbies.map<Widget>((h) {
                               return lg.GlassChip(
-                                child: Text(h,
-                                    style: const TextStyle(
-                                        color: SynapserTheme.tintBlue,
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w500)),
+                                label: h,
+                                selectedColor: SynapserTheme.tintBlue,
                               );
                             }).toList(),
                           ),

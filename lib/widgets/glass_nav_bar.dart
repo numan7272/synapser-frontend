@@ -20,19 +20,23 @@ class GlassNavBar extends StatelessWidget {
         tabs: const [
           lg.GlassBottomBarTab(
             label: 'Home',
-            icon: Icon(Icons.calendar_today_rounded),
+            icon: Icons.calendar_today_rounded,
+            selectedIcon: Icons.calendar_today,
           ),
           lg.GlassBottomBarTab(
             label: 'Planen',
-            icon: Icon(Icons.add_circle_outline_rounded),
+            icon: Icons.add_circle_outline_rounded,
+            selectedIcon: Icons.add_circle_rounded,
           ),
           lg.GlassBottomBarTab(
             label: 'Tipps',
-            icon: Icon(Icons.lightbulb_outline_rounded),
+            icon: Icons.lightbulb_outline_rounded,
+            selectedIcon: Icons.lightbulb_rounded,
           ),
           lg.GlassBottomBarTab(
             label: 'Profil',
-            icon: Icon(Icons.person_outline_rounded),
+            icon: Icons.person_outline_rounded,
+            selectedIcon: Icons.person_rounded,
           ),
         ],
         selectedIndex: currentIndex,

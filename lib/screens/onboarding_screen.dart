@@ -171,26 +171,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       child: Wrap(
         spacing: 8,
         runSpacing: 8,
-        children: _hobbyOptions.map((hobby) {
+        children: _hobbyOptions.map<Widget>((hobby) {
           final selected = _selectedHobbies.contains(hobby);
           return lg.GlassChip(
+            label: hobby,
             selected: selected,
-            onSelected: (v) {
+            selectedColor: SynapserTheme.tintBlue,
+            onTap: () {
               setState(() {
-                if (v) {
-                  _selectedHobbies.add(hobby);
-                } else {
+                if (selected) {
                   _selectedHobbies.remove(hobby);
+                } else {
+                  _selectedHobbies.add(hobby);
                 }
               });
             },
-            child: Text(
-              hobby,
-              style: TextStyle(
-                color: selected ? SynapserTheme.tintBlue : SynapserTheme.labelSecondary,
-                fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
-              ),
-            ),
           );
         }).toList(),
       ),

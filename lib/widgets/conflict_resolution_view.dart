@@ -56,16 +56,9 @@ class ConflictResolutionView extends StatelessWidget {
           Wrap(
             spacing: 8,
             runSpacing: 8,
-            children: conflict.conflictingEvents.map((event) {
+            children: conflict.conflictingEvents.map<Widget>((event) {
               return lg.GlassChip(
-                child: Text(
-                  event.name,
-                  style: const TextStyle(
-                    color: SynapserTheme.labelPrimary,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+                label: event.name,
               );
             }).toList(),
           ),

@@ -24,8 +24,12 @@ class GlassButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final accentColor = color ?? SynapserTheme.tintBlue;
 
-    return lg.GlassButton(
-      onPressed: isLoading ? null : onPressed,
+    return lg.GlassButton.custom(
+      onTap: isLoading ? () {} : (onPressed ?? () {}),
+      enabled: !isLoading && onPressed != null,
+      width: double.infinity,
+      height: 48,
+      shape: const lg.LiquidRoundedSuperellipse(borderRadius: 16),
       settings: lg.LiquidGlassSettings(
         thickness: isPrimary ? 35 : 25,
         blur: 10,
@@ -33,6 +37,7 @@ class GlassButton extends StatelessWidget {
             ? accentColor.withOpacity(0.6)
             : Colors.white.withOpacity(0.3),
       ),
+      glowColor: isPrimary ? accentColor : null,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
