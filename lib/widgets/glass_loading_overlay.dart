@@ -10,7 +10,7 @@ class GlassLoadingOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black.withOpacity(0.15),
+      color: Colors.black.withValues(alpha: 0.15),
       child: Center(
         child: lg.GlassCard(
           useOwnLayer: true,

@@ -43,9 +43,7 @@ class SynapserApp extends StatelessWidget {
           create: (_) => SuggestionProvider(apiService),
         ),
       ],
-      child: GlassTheme(
-        data: SynapserTheme.glassThemeData,
-        child: MaterialApp(
+      child: MaterialApp(
           title: 'Synapser',
           debugShowCheckedModeBanner: false,
           theme: SynapserTheme.liquidGlassTheme,
@@ -58,9 +56,14 @@ class SynapserApp extends StatelessWidget {
             DefaultMaterialLocalizations.delegate,
             DefaultWidgetsLocalizations.delegate,
           ],
+          builder: (context, child) {
+            return GlassTheme(
+              data: SynapserTheme.glassThemeData,
+              child: child ?? const SizedBox(),
+            );
+          },
           home: const _AuthGate(),
         ),
-      ),
     );
   }
 }

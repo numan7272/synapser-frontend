@@ -41,7 +41,7 @@ class GlassTextField extends StatelessWidget {
       settings: lg.LiquidGlassSettings(
         thickness: 20,
         blur: 8,
-        glassColor: Colors.white.withOpacity(0.15),
+        glassColor: Colors.white.withValues(alpha: 0.15),
       ),
       child: TextFormField(
         controller: controller,
@@ -65,7 +65,7 @@ class GlassTextField extends StatelessWidget {
           border: InputBorder.none,
           enabledBorder: InputBorder.none,
           focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: SynapserTheme.tintBlue.withOpacity(0.6), width: 1.5),
+            borderSide: BorderSide(color: SynapserTheme.tintBlue.withValues(alpha: 0.6), width: 1.5),
           ),
           errorBorder: UnderlineInputBorder(
             borderSide: const BorderSide(color: SynapserTheme.errorRed),

@@ -42,11 +42,11 @@ class SynapserTheme {
         ),
         quality: GlassQuality.standard,
         glowColors: GlassGlowColors(
-          primary: tintBlue.withOpacity(0.3),
-          secondary: tintPurple.withOpacity(0.3),
-          success: tintGreen.withOpacity(0.3),
-          warning: tintOrange.withOpacity(0.3),
-          danger: tintRed.withOpacity(0.3),
+          primary: tintBlue.withValues(alpha: 0.3),
+          secondary: tintPurple.withValues(alpha: 0.3),
+          success: tintGreen.withValues(alpha: 0.3),
+          warning: tintOrange.withValues(alpha: 0.3),
+          danger: tintRed.withValues(alpha: 0.3),
         ),
       ),
       dark: GlassThemeVariant(
@@ -57,11 +57,11 @@ class SynapserTheme {
         ),
         quality: GlassQuality.standard,
         glowColors: GlassGlowColors(
-          primary: tintBlue.withOpacity(0.4),
-          secondary: tintPurple.withOpacity(0.4),
-          success: tintGreen.withOpacity(0.4),
-          warning: tintOrange.withOpacity(0.4),
-          danger: tintRed.withOpacity(0.4),
+          primary: tintBlue.withValues(alpha: 0.4),
+          secondary: tintPurple.withValues(alpha: 0.4),
+          success: tintGreen.withValues(alpha: 0.4),
+          warning: tintOrange.withValues(alpha: 0.4),
+          danger: tintRed.withValues(alpha: 0.4),
         ),
       ),
     );

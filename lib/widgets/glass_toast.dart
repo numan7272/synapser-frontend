@@ -98,7 +98,7 @@ class _ToastWidgetState extends State<_ToastWidget>
             settings: lg.LiquidGlassSettings(
               thickness: 35,
               blur: 15,
-              glassColor: Colors.white.withOpacity(0.2),
+              glassColor: Colors.white.withValues(alpha: 0.2),
             ),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),

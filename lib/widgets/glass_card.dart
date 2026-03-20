@@ -26,7 +26,7 @@ class GlassCard extends StatelessWidget {
       settings: lg.LiquidGlassSettings(
         thickness: 30,
         blur: 12,
-        glassColor: accentColor?.withOpacity(0.15) ?? Colors.white.withOpacity(0.1),
+        glassColor: accentColor?.withValues(alpha: 0.15) ?? Colors.white.withValues(alpha: 0.1),
       ),
       child: Padding(
         padding: padding ?? const EdgeInsets.all(20),

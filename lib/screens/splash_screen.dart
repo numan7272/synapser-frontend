@@ -23,7 +23,7 @@ class SplashScreen extends StatelessWidget {
                 settings: lg.LiquidGlassSettings(
                   thickness: 35,
                   blur: 12,
-                  glassColor: SynapserTheme.tintBlue.withOpacity(0.35),
+                  glassColor: SynapserTheme.tintBlue.withValues(alpha: 0.35),
                 ),
                 child: const Icon(
                   Icons.auto_awesome_rounded,

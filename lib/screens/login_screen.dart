@@ -74,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       settings: lg.LiquidGlassSettings(
                         thickness: 30,
                         blur: 10,
-                        glassColor: SynapserTheme.tintBlue.withOpacity(0.35),
+                        glassColor: SynapserTheme.tintBlue.withValues(alpha: 0.35),
                       ),
                       child: const Icon(
                         Icons.auto_awesome_rounded,

@@ -55,7 +55,7 @@ class TimelineSlotWidget extends StatelessWidget {
                     color: _accentColor,
                     boxShadow: [
                       BoxShadow(
-                        color: _accentColor.withOpacity(0.35),
+                        color: _accentColor.withValues(alpha: 0.35),
                         blurRadius: 6,
                       ),
                     ],
@@ -65,7 +65,7 @@ class TimelineSlotWidget extends StatelessWidget {
                   Expanded(
                     child: Container(
                       width: 1,
-                      color: SynapserTheme.labelTertiary.withOpacity(0.2),
+                      color: SynapserTheme.labelTertiary.withValues(alpha: 0.2),
                     ),
                   ),
               ],
@@ -79,7 +79,7 @@ class TimelineSlotWidget extends StatelessWidget {
                   settings: lg.LiquidGlassSettings(
                     thickness: 25,
                     blur: 10,
-                    glassColor: Colors.white.withOpacity(0.15),
+                    glassColor: Colors.white.withValues(alpha: 0.15),
                   ),
                   child: Container(
                     padding: const EdgeInsets.all(14),

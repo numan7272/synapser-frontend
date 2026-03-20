@@ -62,7 +62,7 @@ class _AiTaskInputSheetState extends State<AiTaskInputSheet> {
             settings: lg.LiquidGlassSettings(
               thickness: 35,
               blur: 15,
-              glassColor: Colors.white.withOpacity(0.25),
+              glassColor: Colors.white.withValues(alpha: 0.25),
             ),
             child: SingleChildScrollView(
               controller: scrollController,
@@ -75,7 +75,7 @@ class _AiTaskInputSheetState extends State<AiTaskInputSheet> {
                       width: 36,
                       height: 5,
                       decoration: BoxDecoration(
-                        color: SynapserTheme.labelTertiary.withOpacity(0.4),
+                        color: SynapserTheme.labelTertiary.withValues(alpha: 0.4),
                         borderRadius: BorderRadius.circular(3),
                       ),
                     ),
@@ -110,7 +110,7 @@ class _AiTaskInputSheetState extends State<AiTaskInputSheet> {
                           settings: lg.LiquidGlassSettings(
                             thickness: 20,
                             blur: 8,
-                            glassColor: SynapserTheme.tintBlue.withOpacity(0.15),
+                            glassColor: SynapserTheme.tintBlue.withValues(alpha: 0.15),
                           ),
                           child: const Icon(Icons.auto_awesome_rounded,
                               color: SynapserTheme.tintBlue, size: 18),

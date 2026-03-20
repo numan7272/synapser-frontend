@@ -34,8 +34,8 @@ class GlassButton extends StatelessWidget {
         thickness: isPrimary ? 35 : 25,
         blur: 10,
         glassColor: isPrimary
-            ? accentColor.withOpacity(0.6)
-            : Colors.white.withOpacity(0.3),
+            ? accentColor.withValues(alpha: 0.6)
+            : Colors.white.withValues(alpha: 0.3),
       ),
       glowColor: isPrimary ? accentColor : null,
       child: Row(

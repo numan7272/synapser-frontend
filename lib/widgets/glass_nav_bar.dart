@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:liquid_glass_widgets/liquid_glass_widgets.dart' as lg;
-import '../config/theme.dart';
 
 class GlassNavBar extends StatelessWidget {
   final int currentIndex;
@@ -44,7 +43,7 @@ class GlassNavBar extends StatelessWidget {
         glassSettings: lg.LiquidGlassSettings(
           thickness: 35,
           blur: 15,
-          glassColor: Colors.white.withOpacity(0.15),
+          glassColor: Colors.white.withValues(alpha: 0.15),
         ),
       ),
     );

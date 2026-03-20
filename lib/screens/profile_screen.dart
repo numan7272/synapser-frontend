@@ -35,7 +35,7 @@ class ProfileScreen extends StatelessWidget {
               settings: lg.LiquidGlassSettings(
                 thickness: 25,
                 blur: 10,
-                glassColor: SynapserTheme.tintBlue.withOpacity(0.2),
+                glassColor: SynapserTheme.tintBlue.withValues(alpha: 0.2),
               ),
               child: Center(
                 child: Text(
@@ -128,7 +128,7 @@ class ProfileScreen extends StatelessWidget {
   Widget _buildDivider() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
-      child: Divider(height: 1, color: Colors.white.withOpacity(0.3)),
+      child: Divider(height: 1, color: Colors.white.withValues(alpha: 0.3)),
     );
   }
 

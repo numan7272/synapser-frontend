@@ -63,7 +63,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   itemBuilder: (context, index) {
                     final day = _weekDays[index];
                     final isSelected = DateUtils.isSameDay(day, _selectedDate);
-                    final isToday = DateUtils.isSameDay(day, DateTime.now());
 
                     return GestureDetector(
                       onTap: () => setState(() => _selectedDate = day),
@@ -75,8 +74,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
                             thickness: isSelected ? 35 : 20,
                             blur: 10,
                             glassColor: isSelected
-                                ? SynapserTheme.tintBlue.withOpacity(0.5)
-                                : Colors.white.withOpacity(0.15),
+                                ? SynapserTheme.tintBlue.withValues(alpha: 0.5)
+                                : Colors.white.withValues(alpha: 0.15),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
@@ -89,7 +88,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                     fontSize: 11,
                                     fontWeight: FontWeight.w500,
                                     color: isSelected
-                                        ? Colors.white.withOpacity(0.8)
+                                        ? Colors.white.withValues(alpha: 0.8)
                                         : SynapserTheme.labelTertiary,
                                   ),
                                 ),

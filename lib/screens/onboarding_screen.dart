@@ -103,7 +103,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               ],
                             )
                           : null,
-                      color: i == _currentPage ? null : SynapserTheme.labelTertiary.withOpacity(0.3),
+                      color: i == _currentPage ? null : SynapserTheme.labelTertiary.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(4),
                     ),
                   );
@@ -231,7 +231,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             settings: lg.LiquidGlassSettings(
               thickness: 25,
               blur: 10,
-              glassColor: SynapserTheme.tintBlue.withOpacity(0.15),
+              glassColor: SynapserTheme.tintBlue.withValues(alpha: 0.15),
             ),
             child: Icon(icon, size: 28, color: SynapserTheme.tintBlue),
           ).animate().scale(duration: 400.ms, curve: Curves.easeOutBack),
