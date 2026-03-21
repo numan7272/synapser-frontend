@@ -1,126 +1,169 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:liquid_glass_widgets/liquid_glass_widgets.dart';
 
 class SynapserTheme {
-  // iOS 26 Liquid Glass - Base colors
-  static const Color backgroundLight = Color(0xFFF0F2F5);
-  static const Color backgroundWhite = Color(0xFFFFFFFF);
+  // ── Aurora Dark - Core Palette ──
+  static const Color bgPrimary = Color(0xFF0D0D12);
+  static const Color bgSecondary = Color(0xFF14141F);
+  static const Color bgCard = Color(0xFF1A1A2E);
+  static const Color bgCardHover = Color(0xFF22223A);
+  static const Color bgSurface = Color(0xFF16162A);
 
-  // Vibrant tint colors (show through glass)
-  static const Color tintBlue = Color(0xFF007AFF);
-  static const Color tintPurple = Color(0xFFBF5AF2);
-  static const Color tintGreen = Color(0xFF30D158);
-  static const Color tintOrange = Color(0xFFFF9F0A);
-  static const Color tintRed = Color(0xFFFF453A);
-  static const Color tintCyan = Color(0xFF64D2FF);
-  static const Color tintMint = Color(0xFF66D4CF);
-  static const Color tintIndigo = Color(0xFF5E5CE6);
+  // Accent gradients
+  static const Color accentBlue = Color(0xFF6C63FF);
+  static const Color accentCyan = Color(0xFF00D4FF);
+  static const Color accentPurple = Color(0xFFA855F7);
+  static const Color accentPink = Color(0xFFEC4899);
+  static const Color accentGreen = Color(0xFF22C55E);
+  static const Color accentOrange = Color(0xFFF97316);
+  static const Color accentRed = Color(0xFFEF4444);
 
-  // Text colors
-  static const Color labelPrimary = Color(0xFF1C1C1E);
-  static const Color labelSecondary = Color(0xFF636366);
-  static const Color labelTertiary = Color(0xFFAEAEB2);
+  // Text
+  static const Color textPrimary = Color(0xFFF1F1F6);
+  static const Color textSecondary = Color(0xFF9CA3B0);
+  static const Color textMuted = Color(0xFF5A5F73);
 
-  static const Color errorRed = Color(0xFFFF453A);
+  // Borders
+  static const Color borderSubtle = Color(0xFF2A2A40);
+  static const Color borderGlow = Color(0xFF6C63FF);
 
-  // Liquid Glass constants
-  static const double glassRadius = 22.0;
-  static const double glassBlurSigma = 40.0;
-  static const double glassOpacity = 0.45;
-  static const double glassBorderOpacity = 0.35;
-  static const double glassSpecularOpacity = 0.5;
+  // Card radius
+  static const double radiusSm = 12.0;
+  static const double radiusMd = 16.0;
+  static const double radiusLg = 20.0;
+  static const double radiusXl = 24.0;
 
-  /// Liquid Glass theme data for the package
-  static GlassThemeData get glassThemeData {
-    return GlassThemeData(
-      light: GlassThemeVariant(
-        settings: LiquidGlassSettings(
-          thickness: 30,
-          blur: 12,
-          lightIntensity: 2.0,
-        ),
-        quality: GlassQuality.standard,
-        glowColors: GlassGlowColors(
-          primary: tintBlue.withValues(alpha: 0.3),
-          secondary: tintPurple.withValues(alpha: 0.3),
-          success: tintGreen.withValues(alpha: 0.3),
-          warning: tintOrange.withValues(alpha: 0.3),
-          danger: tintRed.withValues(alpha: 0.3),
-        ),
+  /// Primary gradient (Blue → Cyan)
+  static const LinearGradient gradientPrimary = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [accentBlue, accentCyan],
+  );
+
+  /// Secondary gradient (Purple → Pink)
+  static const LinearGradient gradientSecondary = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [accentPurple, accentPink],
+  );
+
+  /// Aurora background gradient
+  static const LinearGradient gradientAurora = LinearGradient(
+    begin: Alignment(-1.0, -1.0),
+    end: Alignment(1.0, 1.0),
+    colors: [
+      Color(0xFF0D0D12),
+      Color(0xFF12122B),
+      Color(0xFF0F1A2E),
+      Color(0xFF0D0D12),
+    ],
+    stops: [0.0, 0.35, 0.65, 1.0],
+  );
+
+  /// Card decoration with subtle border and glow
+  static BoxDecoration cardDecoration({
+    Color? glowColor,
+    double radius = radiusLg,
+  }) {
+    return BoxDecoration(
+      color: bgCard,
+      borderRadius: BorderRadius.circular(radius),
+      border: Border.all(
+        color: glowColor?.withValues(alpha: 0.15) ?? borderSubtle,
+        width: 1,
       ),
-      dark: GlassThemeVariant(
-        settings: LiquidGlassSettings(
-          thickness: 25,
-          blur: 15,
-          lightIntensity: 1.5,
-        ),
-        quality: GlassQuality.standard,
-        glowColors: GlassGlowColors(
-          primary: tintBlue.withValues(alpha: 0.4),
-          secondary: tintPurple.withValues(alpha: 0.4),
-          success: tintGreen.withValues(alpha: 0.4),
-          warning: tintOrange.withValues(alpha: 0.4),
-          danger: tintRed.withValues(alpha: 0.4),
-        ),
-      ),
+      boxShadow: glowColor != null
+          ? [
+              BoxShadow(
+                color: glowColor.withValues(alpha: 0.08),
+                blurRadius: 24,
+                offset: const Offset(0, 8),
+                spreadRadius: -4,
+              ),
+            ]
+          : [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.3),
+                blurRadius: 16,
+                offset: const Offset(0, 4),
+                spreadRadius: -2,
+              ),
+            ],
     );
   }
 
-  /// Vibrant mesh gradient background with LiquidGlassScope for refraction
-  static Widget meshGradientBackground({Widget? child}) {
-    return LiquidGlassScope.stack(
-      background: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment(-1.0, -1.0),
-            end: Alignment(1.0, 1.0),
-            colors: [
-              Color(0xFFE8F0FE), // Light blue
-              Color(0xFFF5EEFF), // Light purple
-              Color(0xFFFFF0F0), // Light pink
-              Color(0xFFF0F8FF), // Ice blue
-            ],
-            stops: [0.0, 0.3, 0.6, 1.0],
-          ),
-        ),
+  /// Gradient border decoration for highlighted cards
+  static Widget gradientBorderCard({
+    required Widget child,
+    Gradient gradient = gradientPrimary,
+    double radius = radiusLg,
+    double borderWidth = 1.5,
+    EdgeInsetsGeometry? padding,
+    EdgeInsetsGeometry? margin,
+  }) {
+    Widget card = Container(
+      decoration: BoxDecoration(
+        gradient: gradient,
+        borderRadius: BorderRadius.circular(radius),
       ),
-      content: child ?? const SizedBox(),
+      child: Container(
+        margin: EdgeInsets.all(borderWidth),
+        decoration: BoxDecoration(
+          color: bgCard,
+          borderRadius: BorderRadius.circular(radius - borderWidth),
+        ),
+        padding: padding ?? const EdgeInsets.all(20),
+        child: child,
+      ),
+    );
+
+    if (margin != null) {
+      card = Padding(padding: margin, child: card);
+    }
+
+    return card;
+  }
+
+  /// Aurora dark background
+  static Widget auroraBackground({Widget? child}) {
+    return Container(
+      decoration: const BoxDecoration(gradient: gradientAurora),
+      child: child,
     );
   }
 
   static ThemeData get liquidGlassTheme {
     final textTheme = GoogleFonts.interTextTheme(
       const TextTheme(
-        headlineLarge: TextStyle(fontSize: 34, fontWeight: FontWeight.bold, color: labelPrimary, letterSpacing: -0.5),
-        headlineMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: labelPrimary, letterSpacing: -0.5),
-        titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: labelPrimary),
-        titleMedium: TextStyle(fontSize: 17, fontWeight: FontWeight.w600, color: labelPrimary),
-        bodyLarge: TextStyle(fontSize: 17, color: labelPrimary),
-        bodyMedium: TextStyle(fontSize: 15, color: labelSecondary),
-        bodySmall: TextStyle(fontSize: 13, color: labelTertiary),
-        labelLarge: TextStyle(fontSize: 17, fontWeight: FontWeight.w600, color: tintBlue),
+        headlineLarge: TextStyle(fontSize: 34, fontWeight: FontWeight.bold, color: textPrimary, letterSpacing: -0.5),
+        headlineMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: textPrimary, letterSpacing: -0.5),
+        titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: textPrimary),
+        titleMedium: TextStyle(fontSize: 17, fontWeight: FontWeight.w600, color: textPrimary),
+        bodyLarge: TextStyle(fontSize: 17, color: textPrimary),
+        bodyMedium: TextStyle(fontSize: 15, color: textSecondary),
+        bodySmall: TextStyle(fontSize: 13, color: textMuted),
+        labelLarge: TextStyle(fontSize: 17, fontWeight: FontWeight.w600, color: accentBlue),
       ),
     );
 
     return ThemeData(
       useMaterial3: true,
-      brightness: Brightness.light,
-      scaffoldBackgroundColor: Colors.transparent,
+      brightness: Brightness.dark,
+      scaffoldBackgroundColor: bgPrimary,
       textTheme: textTheme,
-      colorScheme: const ColorScheme.light(
-        primary: tintBlue,
-        secondary: tintPurple,
-        surface: backgroundWhite,
-        error: errorRed,
+      colorScheme: const ColorScheme.dark(
+        primary: accentBlue,
+        secondary: accentPurple,
+        surface: bgCard,
+        error: accentRed,
       ),
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
         elevation: 0,
         scrolledUnderElevation: 0,
-        iconTheme: IconThemeData(color: tintBlue),
+        iconTheme: IconThemeData(color: accentBlue),
         titleTextStyle: TextStyle(
-          color: labelPrimary,
+          color: textPrimary,
           fontSize: 17,
           fontWeight: FontWeight.w600,
         ),

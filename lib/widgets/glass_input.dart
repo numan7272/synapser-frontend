@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../config/theme.dart';
 
@@ -34,49 +33,43 @@ class GlassTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(14),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-        child: TextFormField(
-          controller: controller,
-          obscureText: obscureText,
-          keyboardType: keyboardType,
-          maxLines: maxLines,
-          validator: validator,
-          onChanged: onChanged,
-          textInputAction: textInputAction,
-          onEditingComplete: onEditingComplete,
-          style: const TextStyle(color: SynapserTheme.labelPrimary, fontSize: 17),
-          cursorColor: SynapserTheme.tintBlue,
-          decoration: InputDecoration(
-            hintText: hintText,
-            labelText: labelText,
-            hintStyle: const TextStyle(color: SynapserTheme.labelTertiary),
-            labelStyle: const TextStyle(color: SynapserTheme.labelSecondary),
-            prefixIcon: prefixIcon,
-            suffixIcon: suffixIcon,
-            filled: true,
-            fillColor: Colors.white.withValues(alpha: 0.4),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(14),
-              borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.5)),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(14),
-              borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.5)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(14),
-              borderSide: BorderSide(color: SynapserTheme.tintBlue.withValues(alpha: 0.6), width: 1.5),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(14),
-              borderSide: const BorderSide(color: SynapserTheme.errorRed),
-            ),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          ),
+    return TextFormField(
+      controller: controller,
+      obscureText: obscureText,
+      keyboardType: keyboardType,
+      maxLines: maxLines,
+      validator: validator,
+      onChanged: onChanged,
+      textInputAction: textInputAction,
+      onEditingComplete: onEditingComplete,
+      style: const TextStyle(color: SynapserTheme.textPrimary, fontSize: 17),
+      cursorColor: SynapserTheme.accentBlue,
+      decoration: InputDecoration(
+        hintText: hintText,
+        labelText: labelText,
+        hintStyle: const TextStyle(color: SynapserTheme.textMuted),
+        labelStyle: const TextStyle(color: SynapserTheme.textSecondary),
+        prefixIcon: prefixIcon,
+        suffixIcon: suffixIcon,
+        filled: true,
+        fillColor: SynapserTheme.bgSurface,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(SynapserTheme.radiusMd),
+          borderSide: const BorderSide(color: SynapserTheme.borderSubtle),
         ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(SynapserTheme.radiusMd),
+          borderSide: const BorderSide(color: SynapserTheme.borderSubtle),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(SynapserTheme.radiusMd),
+          borderSide: const BorderSide(color: SynapserTheme.accentBlue, width: 1.5),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(SynapserTheme.radiusMd),
+          borderSide: const BorderSide(color: SynapserTheme.accentRed),
+        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       ),
     );
   }

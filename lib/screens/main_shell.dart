@@ -38,7 +38,7 @@ class _MainShellState extends State<MainShell> {
 
   @override
   Widget build(BuildContext context) {
-    return SynapserTheme.meshGradientBackground(
+    return SynapserTheme.auroraBackground(
       child: Scaffold(
         backgroundColor: Colors.transparent,
         extendBody: true,

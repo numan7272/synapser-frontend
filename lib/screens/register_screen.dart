@@ -54,12 +54,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final auth = context.watch<AuthProvider>();
     final s = S.of(context);
 
-    return SynapserTheme.meshGradientBackground(
+    return SynapserTheme.auroraBackground(
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_rounded, color: SynapserTheme.tintBlue),
+            icon: const Icon(Icons.arrow_back_ios_rounded, color: SynapserTheme.accentBlue),
             onPressed: () => Navigator.pop(context),
           ),
         ),
@@ -81,7 +81,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             style: const TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
-                              color: SynapserTheme.labelPrimary,
+                              color: SynapserTheme.textPrimary,
                             ),
                           ),
                           const SizedBox(height: 24),
@@ -91,7 +91,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             keyboardType: TextInputType.emailAddress,
                             textInputAction: TextInputAction.next,
                             prefixIcon: const Icon(Icons.email_outlined,
-                                color: SynapserTheme.labelTertiary),
+                                color: SynapserTheme.textMuted),
                             validator: (v) {
                               if (v == null || !v.contains('@')) {
                                 return s.invalidEmail;
@@ -106,13 +106,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             obscureText: _obscurePassword,
                             textInputAction: TextInputAction.next,
                             prefixIcon: const Icon(Icons.lock_outline_rounded,
-                                color: SynapserTheme.labelTertiary),
+                                color: SynapserTheme.textMuted),
                             suffixIcon: IconButton(
                               icon: Icon(
                                 _obscurePassword
                                     ? Icons.visibility_off_outlined
                                     : Icons.visibility_outlined,
-                                color: SynapserTheme.labelTertiary,
+                                color: SynapserTheme.textMuted,
                               ),
                               onPressed: () =>
                                   setState(() => _obscurePassword = !_obscurePassword),
@@ -132,7 +132,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             textInputAction: TextInputAction.done,
                             onEditingComplete: _register,
                             prefixIcon: const Icon(Icons.lock_outline_rounded,
-                                color: SynapserTheme.labelTertiary),
+                                color: SynapserTheme.textMuted),
                             validator: (v) {
                               if (v != _passwordController.text) {
                                 return s.passwordsMismatch;
@@ -155,12 +155,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       children: [
                         Text(s.hasAccount,
                             style: const TextStyle(
-                                color: SynapserTheme.labelTertiary)),
+                                color: SynapserTheme.textMuted)),
                         TextButton(
                           onPressed: () => Navigator.pop(context),
                           child: Text(s.login,
                               style: const TextStyle(
-                                  color: SynapserTheme.tintBlue,
+                                  color: SynapserTheme.accentCyan,
                                   fontWeight: FontWeight.w600)),
                         ),
                       ],

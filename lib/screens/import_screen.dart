@@ -53,16 +53,16 @@ class _ImportScreenState extends State<ImportScreen> {
     final scheduleProvider = context.watch<ScheduleProvider>();
     final s = S.of(context);
 
-    return SynapserTheme.meshGradientBackground(
+    return SynapserTheme.auroraBackground(
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_rounded, color: SynapserTheme.tintBlue),
+            icon: const Icon(Icons.arrow_back_ios_rounded, color: SynapserTheme.accentBlue),
             onPressed: () => Navigator.pop(context),
           ),
           title: Text(s.importSchedule,
-              style: const TextStyle(color: SynapserTheme.labelPrimary, fontSize: 17, fontWeight: FontWeight.w600)),
+              style: const TextStyle(color: SynapserTheme.textPrimary, fontSize: 17, fontWeight: FontWeight.w600)),
         ),
         body: Stack(
           children: [
@@ -94,12 +94,12 @@ class _ImportScreenState extends State<ImportScreen> {
                             child: Column(
                               children: [
                                 const Icon(Icons.document_scanner_rounded,
-                                    color: SynapserTheme.tintBlue, size: 36),
+                                    color: SynapserTheme.accentBlue, size: 36),
                                 const SizedBox(height: 12),
                                 Text(s.importDescription,
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
-                                        color: SynapserTheme.labelSecondary, fontSize: 15)),
+                                        color: SynapserTheme.textSecondary, fontSize: 15)),
                               ],
                             ),
                           ).animate().fadeIn(duration: 400.ms),

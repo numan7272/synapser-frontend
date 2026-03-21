@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:intl/intl.dart';
-import 'package:liquid_glass_widgets/liquid_glass_widgets.dart' as lg;
 import 'package:provider/provider.dart';
 import '../config/theme.dart';
 import '../l10n/l10n.dart';
@@ -39,16 +38,16 @@ class _CalendarScreenState extends State<CalendarScreen> {
     final s = S.of(context);
     final locale = S.locale(context);
 
-    return SynapserTheme.meshGradientBackground(
+    return SynapserTheme.auroraBackground(
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_rounded, color: SynapserTheme.tintBlue),
+            icon: const Icon(Icons.arrow_back_ios_rounded, color: SynapserTheme.accentBlue),
             onPressed: () => Navigator.pop(context),
           ),
           title: Text(s.weekView,
-              style: const TextStyle(color: SynapserTheme.labelPrimary, fontSize: 17, fontWeight: FontWeight.w600)),
+              style: const TextStyle(color: SynapserTheme.textPrimary, fontSize: 17, fontWeight: FontWeight.w600)),
         ),
         body: SafeArea(
           child: Column(
@@ -63,49 +62,61 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   itemBuilder: (context, index) {
                     final day = _weekDays[index];
                     final isSelected = DateUtils.isSameDay(day, _selectedDate);
+                    final isToday = DateUtils.isSameDay(day, DateTime.now());
 
                     return GestureDetector(
                       onTap: () => setState(() => _selectedDate = day),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
-                        child: lg.GlassContainer(
-                          useOwnLayer: true,
-                          settings: lg.LiquidGlassSettings(
-                            thickness: isSelected ? 35 : 20,
-                            blur: 10,
-                            glassColor: isSelected
-                                ? SynapserTheme.tintBlue.withValues(alpha: 0.5)
-                                : Colors.white.withValues(alpha: 0.15),
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                        decoration: BoxDecoration(
+                          gradient: isSelected ? SynapserTheme.gradientPrimary : null,
+                          color: isSelected ? null : SynapserTheme.bgCard,
+                          borderRadius: BorderRadius.circular(SynapserTheme.radiusMd),
+                          border: Border.all(
+                            color: isSelected
+                                ? Colors.transparent
+                                : isToday
+                                    ? SynapserTheme.accentBlue.withValues(alpha: 0.4)
+                                    : SynapserTheme.borderSubtle,
+                            width: 1,
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  DateFormat('E', locale).format(day),
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w500,
-                                    color: isSelected
-                                        ? Colors.white.withValues(alpha: 0.8)
-                                        : SynapserTheme.labelTertiary,
+                          boxShadow: isSelected
+                              ? [
+                                  BoxShadow(
+                                    color: SynapserTheme.accentBlue.withValues(alpha: 0.3),
+                                    blurRadius: 12,
+                                    offset: const Offset(0, 4),
                                   ),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  '${day.day}',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                    color: isSelected
-                                        ? Colors.white
-                                        : SynapserTheme.labelPrimary,
-                                  ),
-                                ),
-                              ],
+                                ]
+                              : null,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              DateFormat('E', locale).format(day),
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w500,
+                                color: isSelected
+                                    ? Colors.white.withValues(alpha: 0.8)
+                                    : SynapserTheme.textMuted,
+                              ),
                             ),
-                          ),
+                            const SizedBox(height: 4),
+                            Text(
+                              '${day.day}',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                color: isSelected
+                                    ? Colors.white
+                                    : SynapserTheme.textPrimary,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     );
@@ -123,7 +134,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                     style: const TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w600,
-                      color: SynapserTheme.labelSecondary,
+                      color: SynapserTheme.textSecondary,
                     ),
                   ),
                 ),
@@ -136,7 +147,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                         child: Text(
                           s.noEventsOnDay,
                           style: const TextStyle(
-                            color: SynapserTheme.labelTertiary,
+                            color: SynapserTheme.textMuted,
                             fontSize: 17,
                           ),
                         ),

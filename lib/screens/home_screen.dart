@@ -20,7 +20,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  DateTime _selectedDate = DateTime.now();
+  final DateTime _selectedDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: const TextStyle(
                         fontSize: 34,
                         fontWeight: FontWeight.bold,
-                        color: SynapserTheme.labelPrimary,
+                        color: SynapserTheme.textPrimary,
                         letterSpacing: -0.5,
                       ),
                     ),
@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       DateFormat('d. MMMM yyyy', S.locale(context)).format(_selectedDate),
                       style: const TextStyle(
                         fontSize: 15,
-                        color: SynapserTheme.labelTertiary,
+                        color: SynapserTheme.textMuted,
                       ),
                     ),
                   ],
@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     IconButton(
                       icon: const Icon(Icons.calendar_month_rounded,
-                          color: SynapserTheme.tintBlue),
+                          color: SynapserTheme.accentBlue),
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     IconButton(
                       icon: const Icon(Icons.upload_file_rounded,
-                          color: SynapserTheme.tintBlue),
+                          color: SynapserTheme.accentBlue),
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -98,19 +98,19 @@ class _HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: GlassCard(
-                accentColor: SynapserTheme.tintPurple,
+                accentColor: SynapserTheme.accentPurple,
                 padding: const EdgeInsets.all(14),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Icon(Icons.auto_awesome_rounded,
-                        color: SynapserTheme.tintPurple, size: 18),
+                        color: SynapserTheme.accentPurple, size: 18),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
                         scheduleProvider.explanation!,
                         style: const TextStyle(
-                          color: SynapserTheme.labelSecondary,
+                          color: SynapserTheme.textSecondary,
                           fontSize: 14,
                           height: 1.4,
                         ),
@@ -119,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     GestureDetector(
                       onTap: scheduleProvider.clearExplanation,
                       child: const Icon(Icons.close_rounded,
-                          color: SynapserTheme.labelTertiary, size: 18),
+                          color: SynapserTheme.textMuted, size: 18),
                     ),
                   ],
                 ),
@@ -133,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: todaySlots.isEmpty
                 ? _buildEmptyState(s)
                 : RefreshIndicator(
-                    color: SynapserTheme.tintBlue,
+                    color: SynapserTheme.accentBlue,
                     onRefresh: () async {},
                     child: ListView.builder(
                       padding: const EdgeInsets.only(top: 8, bottom: 100),
@@ -163,14 +163,14 @@ class _HomeScreenState extends State<HomeScreen> {
           Icon(
             Icons.event_available_rounded,
             size: 56,
-            color: SynapserTheme.labelTertiary.withValues(alpha: 0.4),
+            color: SynapserTheme.textMuted.withValues(alpha: 0.4),
           ),
           const SizedBox(height: 16),
           Text(
             s.noEventsToday,
             style: const TextStyle(
               fontSize: 18,
-              color: SynapserTheme.labelSecondary,
+              color: SynapserTheme.textSecondary,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -179,7 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
             s.addFirstTask,
             style: const TextStyle(
               fontSize: 15,
-              color: SynapserTheme.labelTertiary,
+              color: SynapserTheme.textMuted,
             ),
           ),
           const SizedBox(height: 24),

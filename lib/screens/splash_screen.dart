@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:liquid_glass_widgets/liquid_glass_widgets.dart' as lg;
 import '../config/theme.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -8,22 +7,27 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SynapserTheme.meshGradientBackground(
+    return SynapserTheme.auroraBackground(
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Liquid Glass logo with shader-based rendering
-              lg.GlassContainer(
-                useOwnLayer: true,
+              // Logo with gradient glow
+              Container(
                 width: 80,
                 height: 80,
-                settings: lg.LiquidGlassSettings(
-                  thickness: 35,
-                  blur: 12,
-                  glassColor: SynapserTheme.tintBlue.withValues(alpha: 0.35),
+                decoration: BoxDecoration(
+                  gradient: SynapserTheme.gradientPrimary,
+                  borderRadius: BorderRadius.circular(SynapserTheme.radiusLg),
+                  boxShadow: [
+                    BoxShadow(
+                      color: SynapserTheme.accentBlue.withValues(alpha: 0.4),
+                      blurRadius: 28,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
                 ),
                 child: const Icon(
                   Icons.auto_awesome_rounded,
@@ -38,7 +42,7 @@ class SplashScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 36,
                   fontWeight: FontWeight.bold,
-                  color: SynapserTheme.labelPrimary,
+                  color: SynapserTheme.textPrimary,
                   letterSpacing: -0.5,
                 ),
               )
@@ -50,14 +54,17 @@ class SplashScreen extends StatelessWidget {
                 'KI-gestützter Lebensplaner',
                 style: TextStyle(
                   fontSize: 15,
-                  color: SynapserTheme.labelTertiary,
+                  color: SynapserTheme.textMuted,
                 ),
               ).animate().fadeIn(delay: 400.ms, duration: 600.ms),
               const SizedBox(height: 48),
-              lg.GlassProgressIndicator.circular(
-                size: 24,
-                strokeWidth: 2.5,
-                color: SynapserTheme.tintBlue,
+              const SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.5,
+                  color: SynapserTheme.accentCyan,
+                ),
               ).animate().fadeIn(delay: 600.ms),
             ],
           ),

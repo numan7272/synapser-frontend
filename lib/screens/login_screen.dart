@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:liquid_glass_widgets/liquid_glass_widgets.dart' as lg;
 import 'package:provider/provider.dart';
 import '../config/theme.dart';
 import '../l10n/l10n.dart';
@@ -54,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final auth = context.watch<AuthProvider>();
     final s = S.of(context);
 
-    return SynapserTheme.meshGradientBackground(
+    return SynapserTheme.auroraBackground(
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: SafeArea(
@@ -66,15 +65,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Liquid Glass logo
-                    lg.GlassContainer(
-                      useOwnLayer: true,
+                    // Logo
+                    Container(
                       width: 64,
                       height: 64,
-                      settings: lg.LiquidGlassSettings(
-                        thickness: 30,
-                        blur: 10,
-                        glassColor: SynapserTheme.tintBlue.withValues(alpha: 0.35),
+                      decoration: BoxDecoration(
+                        gradient: SynapserTheme.gradientPrimary,
+                        borderRadius: BorderRadius.circular(18),
+                        boxShadow: [
+                          BoxShadow(
+                            color: SynapserTheme.accentBlue.withValues(alpha: 0.35),
+                            blurRadius: 20,
+                            offset: const Offset(0, 8),
+                          ),
+                        ],
                       ),
                       child: const Icon(
                         Icons.auto_awesome_rounded,
@@ -88,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
-                        color: SynapserTheme.labelPrimary,
+                        color: SynapserTheme.textPrimary,
                         letterSpacing: -0.5,
                       ),
                     ),
@@ -103,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             style: const TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
-                              color: SynapserTheme.labelPrimary,
+                              color: SynapserTheme.textPrimary,
                             ),
                           ),
                           const SizedBox(height: 24),
@@ -113,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             keyboardType: TextInputType.emailAddress,
                             textInputAction: TextInputAction.next,
                             prefixIcon: const Icon(Icons.email_outlined,
-                                color: SynapserTheme.labelTertiary),
+                                color: SynapserTheme.textMuted),
                             validator: (v) {
                               if (v == null || !v.contains('@')) {
                                 return s.invalidEmail;
@@ -129,13 +133,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             textInputAction: TextInputAction.done,
                             onEditingComplete: _login,
                             prefixIcon: const Icon(Icons.lock_outline_rounded,
-                                color: SynapserTheme.labelTertiary),
+                                color: SynapserTheme.textMuted),
                             suffixIcon: IconButton(
                               icon: Icon(
                                 _obscurePassword
                                     ? Icons.visibility_off_outlined
                                     : Icons.visibility_outlined,
-                                color: SynapserTheme.labelTertiary,
+                                color: SynapserTheme.textMuted,
                               ),
                               onPressed: () =>
                                   setState(() => _obscurePassword = !_obscurePassword),
@@ -163,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         Text(s.noAccount,
                             style: const TextStyle(
-                                color: SynapserTheme.labelTertiary)),
+                                color: SynapserTheme.textMuted)),
                         TextButton(
                           onPressed: () {
                             Navigator.of(context).push(
@@ -179,7 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           child: Text(s.register,
                               style: const TextStyle(
-                                  color: SynapserTheme.tintBlue,
+                                  color: SynapserTheme.accentCyan,
                                   fontWeight: FontWeight.w600)),
                         ),
                       ],

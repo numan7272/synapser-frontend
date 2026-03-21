@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:liquid_glass_widgets/liquid_glass_widgets.dart' as lg;
 import '../config/theme.dart';
 import '../models/models.dart';
 
@@ -17,9 +16,9 @@ class TimelineSlotWidget extends StatelessWidget {
   Color get _accentColor {
     final name = slot.name.toLowerCase();
     if (name.contains('fahrt') || name.contains('driving')) {
-      return SynapserTheme.tintOrange;
+      return SynapserTheme.accentOrange;
     }
-    return SynapserTheme.tintBlue;
+    return SynapserTheme.accentBlue;
   }
 
   @override
@@ -39,7 +38,7 @@ class TimelineSlotWidget extends StatelessWidget {
               child: Text(
                 timeFormat.format(startLocal),
                 style: const TextStyle(
-                  color: SynapserTheme.labelTertiary,
+                  color: SynapserTheme.textMuted,
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                 ),
@@ -65,7 +64,7 @@ class TimelineSlotWidget extends StatelessWidget {
                   Expanded(
                     child: Container(
                       width: 1,
-                      color: SynapserTheme.labelTertiary.withValues(alpha: 0.2),
+                      color: SynapserTheme.textMuted.withValues(alpha: 0.2),
                     ),
                   ),
               ],
@@ -74,41 +73,58 @@ class TimelineSlotWidget extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 12),
-                child: lg.GlassContainer(
-                  useOwnLayer: true,
-                  settings: lg.LiquidGlassSettings(
-                    thickness: 25,
-                    blur: 10,
-                    glassColor: Colors.white.withValues(alpha: 0.15),
-                  ),
-                  child: Container(
-                    padding: const EdgeInsets.all(14),
-                    decoration: BoxDecoration(
-                      border: Border(
-                        left: BorderSide(color: _accentColor, width: 3),
+                child: Container(
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    color: SynapserTheme.bgCard,
+                    borderRadius: BorderRadius.circular(SynapserTheme.radiusMd),
+                    border: Border.all(
+                      color: SynapserTheme.borderSubtle,
+                      width: 1,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: _accentColor.withValues(alpha: 0.08),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
                       ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          slot.name,
-                          style: const TextStyle(
-                            color: SynapserTheme.labelPrimary,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                          ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 3,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: _accentColor,
+                          borderRadius: BorderRadius.circular(2),
                         ),
-                        const SizedBox(height: 4),
-                        Text(
-                          '${timeFormat.format(startLocal)} - ${timeFormat.format(endLocal)}  ·  ${slot.durationMinutes} Min.',
-                          style: const TextStyle(
-                            color: SynapserTheme.labelSecondary,
-                            fontSize: 13,
-                          ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              slot.name,
+                              style: const TextStyle(
+                                color: SynapserTheme.textPrimary,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              '${timeFormat.format(startLocal)} - ${timeFormat.format(endLocal)}  ·  ${slot.durationMinutes} Min.',
+                              style: const TextStyle(
+                                color: SynapserTheme.textSecondary,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:liquid_glass_widgets/liquid_glass_widgets.dart' as lg;
 import 'package:provider/provider.dart';
 import '../config/theme.dart';
 import '../l10n/l10n.dart';
@@ -26,16 +25,20 @@ class ProfileScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 16),
 
-            // Avatar - Liquid Glass circle with shader
-            lg.GlassContainer(
-              useOwnLayer: true,
+            // Avatar with gradient
+            Container(
               width: 80,
               height: 80,
-              shape: const lg.LiquidOval(),
-              settings: lg.LiquidGlassSettings(
-                thickness: 25,
-                blur: 10,
-                glassColor: SynapserTheme.tintBlue.withValues(alpha: 0.2),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: SynapserTheme.gradientPrimary,
+                boxShadow: [
+                  BoxShadow(
+                    color: SynapserTheme.accentBlue.withValues(alpha: 0.3),
+                    blurRadius: 16,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
               ),
               child: Center(
                 child: Text(
@@ -43,7 +46,7 @@ class ProfileScreen extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: SynapserTheme.tintBlue,
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -52,7 +55,7 @@ class ProfileScreen extends StatelessWidget {
             Text(
               user.email,
               style: const TextStyle(
-                  color: SynapserTheme.labelSecondary, fontSize: 15),
+                  color: SynapserTheme.textSecondary, fontSize: 15),
             ),
             const SizedBox(height: 32),
 
@@ -64,7 +67,7 @@ class ProfileScreen extends StatelessWidget {
                       style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: SynapserTheme.labelPrimary)),
+                          color: SynapserTheme.textPrimary)),
                   const SizedBox(height: 16),
                   _buildInfoRow(Icons.work_outline_rounded, s.occupation,
                       user.occupation ?? '-'),
@@ -80,16 +83,33 @@ class ProfileScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Icon(Icons.favorite_border_rounded,
-                            color: SynapserTheme.labelTertiary, size: 20),
+                            color: SynapserTheme.textMuted, size: 20),
                         const SizedBox(width: 12),
                         Expanded(
                           child: Wrap(
                             spacing: 6,
                             runSpacing: 6,
                             children: user.hobbies.map<Widget>((h) {
-                              return lg.GlassChip(
-                                label: h,
-                                selectedColor: SynapserTheme.tintBlue,
+                              return Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 6),
+                                decoration: BoxDecoration(
+                                  color: SynapserTheme.bgSurface,
+                                  borderRadius: BorderRadius.circular(
+                                      SynapserTheme.radiusSm),
+                                  border: Border.all(
+                                      color: SynapserTheme.accentBlue
+                                          .withValues(alpha: 0.3),
+                                      width: 1),
+                                ),
+                                child: Text(
+                                  h,
+                                  style: const TextStyle(
+                                    color: SynapserTheme.textSecondary,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
                               );
                             }).toList(),
                           ),
@@ -108,7 +128,7 @@ class ProfileScreen extends StatelessWidget {
                 label: s.logout,
                 icon: Icons.logout_rounded,
                 isPrimary: false,
-                color: SynapserTheme.tintRed,
+                color: SynapserTheme.accentRed,
                 onPressed: () => auth.logout(),
               ),
             ).animate().fadeIn(delay: 200.ms, duration: 400.ms),
@@ -117,7 +137,7 @@ class ProfileScreen extends StatelessWidget {
             const Text(
               'Synapser v2.0.0',
               style: TextStyle(
-                  color: SynapserTheme.labelTertiary, fontSize: 13),
+                  color: SynapserTheme.textMuted, fontSize: 13),
             ),
           ],
         ),
@@ -128,25 +148,25 @@ class ProfileScreen extends StatelessWidget {
   Widget _buildDivider() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
-      child: Divider(height: 1, color: Colors.white.withValues(alpha: 0.3)),
+      child: Divider(height: 1, color: SynapserTheme.borderSubtle),
     );
   }
 
   Widget _buildInfoRow(IconData icon, String label, String value) {
     return Row(
       children: [
-        Icon(icon, color: SynapserTheme.labelTertiary, size: 20),
+        Icon(icon, color: SynapserTheme.textMuted, size: 20),
         const SizedBox(width: 12),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(label,
                 style: const TextStyle(
-                    color: SynapserTheme.labelTertiary, fontSize: 13)),
+                    color: SynapserTheme.textMuted, fontSize: 13)),
             const SizedBox(height: 2),
             Text(value,
                 style: const TextStyle(
-                    color: SynapserTheme.labelPrimary,
+                    color: SynapserTheme.textPrimary,
                     fontSize: 15,
                     fontWeight: FontWeight.w500)),
           ],

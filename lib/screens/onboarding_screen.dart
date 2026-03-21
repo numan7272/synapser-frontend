@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:liquid_glass_widgets/liquid_glass_widgets.dart' as lg;
 import 'package:provider/provider.dart';
 import '../config/theme.dart';
 import '../l10n/l10n.dart';
@@ -78,7 +77,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     final s = S.of(context);
 
-    return SynapserTheme.meshGradientBackground(
+    return SynapserTheme.auroraBackground(
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: SafeArea(
@@ -95,15 +94,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     width: i == _currentPage ? 28 : 8,
                     height: 8,
                     decoration: BoxDecoration(
-                      gradient: i == _currentPage
-                          ? const LinearGradient(
-                              colors: [
-                                SynapserTheme.tintBlue,
-                                SynapserTheme.tintCyan,
-                              ],
-                            )
-                          : null,
-                      color: i == _currentPage ? null : SynapserTheme.labelTertiary.withValues(alpha: 0.3),
+                      gradient: i == _currentPage ? SynapserTheme.gradientPrimary : null,
+                      color: i == _currentPage ? null : SynapserTheme.textMuted.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(4),
                     ),
                   );
@@ -171,12 +163,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       child: Wrap(
         spacing: 8,
         runSpacing: 8,
-        children: _hobbyOptions.map<Widget>((hobby) {
+        children: _hobbyOptions.map((hobby) {
           final selected = _selectedHobbies.contains(hobby);
-          return lg.GlassChip(
-            label: hobby,
-            selected: selected,
-            selectedColor: SynapserTheme.tintBlue,
+          return GestureDetector(
             onTap: () {
               setState(() {
                 if (selected) {
@@ -186,6 +175,38 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 }
               });
             },
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+              decoration: BoxDecoration(
+                gradient: selected ? SynapserTheme.gradientPrimary : null,
+                color: selected ? null : SynapserTheme.bgSurface,
+                borderRadius: BorderRadius.circular(SynapserTheme.radiusSm),
+                border: Border.all(
+                  color: selected
+                      ? Colors.transparent
+                      : SynapserTheme.borderSubtle,
+                  width: 1,
+                ),
+                boxShadow: selected
+                    ? [
+                        BoxShadow(
+                          color: SynapserTheme.accentBlue.withValues(alpha: 0.2),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ]
+                    : null,
+              ),
+              child: Text(
+                hobby,
+                style: TextStyle(
+                  color: selected ? Colors.white : SynapserTheme.textSecondary,
+                  fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
+                  fontSize: 14,
+                ),
+              ),
+            ),
           );
         }).toList(),
       ),
@@ -224,16 +245,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          lg.GlassContainer(
-            useOwnLayer: true,
+          Container(
             width: 60,
             height: 60,
-            settings: lg.LiquidGlassSettings(
-              thickness: 25,
-              blur: 10,
-              glassColor: SynapserTheme.tintBlue.withValues(alpha: 0.15),
+            decoration: BoxDecoration(
+              gradient: SynapserTheme.gradientPrimary,
+              borderRadius: BorderRadius.circular(SynapserTheme.radiusMd),
+              boxShadow: [
+                BoxShadow(
+                  color: SynapserTheme.accentBlue.withValues(alpha: 0.3),
+                  blurRadius: 16,
+                  offset: const Offset(0, 4),
+                ),
+              ],
             ),
-            child: Icon(icon, size: 28, color: SynapserTheme.tintBlue),
+            child: Icon(icon, size: 28, color: Colors.white),
           ).animate().scale(duration: 400.ms, curve: Curves.easeOutBack),
           const SizedBox(height: 24),
           Text(
@@ -241,7 +267,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             style: const TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
-              color: SynapserTheme.labelPrimary,
+              color: SynapserTheme.textPrimary,
             ),
             textAlign: TextAlign.center,
           ),
